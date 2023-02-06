@@ -1,0 +1,93 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: sample-acmsmall.aux
+The style file: ACM-Reference-Format.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Database file #1: reference.bib
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=20001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--empty publisher in alhamaji2017
+Warning--empty address in alhamaji2017
+Warning--empty publisher in NIPS2017_6768
+Warning--empty address in NIPS2017_6768
+Warning--empty publisher in Duchi2008Efficient
+Warning--empty address in Duchi2008Efficient
+Warning--empty publisher in Duchi:2010tk
+Warning--empty address in Duchi:2010tk
+Warning--empty publisher in Harlap2016Addressing
+Warning--empty address in Harlap2016Addressing
+Warning--empty publisher in Jaggi:2014
+Warning--empty address in Jaggi:2014
+Warning--no number and no volume in Li:2014tt
+Warning--page numbers missing in both pages and numpages fields in Li:2014tt
+Warning--empty publisher in Li:2014:CED
+Warning--empty address in Li:2014:CED
+Warning--page numbers missing in both pages and numpages fields in Reddi:2016wm
+Warning--no number and no volume in Renggli:2018uf
+Warning--page numbers missing in both pages and numpages fields in Renggli:2018uf
+Warning--empty address in Shalev2014Understanding
+Warning--empty publisher in Shamir:2014:CDO
+Warning--empty address in Shamir:2014:CDO
+Warning--no number and no volume in Smith:2016wp
+Warning--page numbers missing in both pages and numpages fields in Smith:2016wp
+Warning--empty publisher in Song:2017tu
+Warning--empty address in Song:2017tu
+Warning--empty publisher in pmlr-v65-wang17a
+Warning--empty address in pmlr-v65-wang17a
+Warning--empty publisher in Wangni:2017vj
+Warning--empty address in Wangni:2017vj
+Warning--no number and no volume in Xie:2016vt
+Warning--page numbers missing in both pages and numpages fields in Xie:2016vt
+Warning--empty publisher in Ye:2018uc
+Warning--empty address in Ye:2018uc
+Warning--empty publisher in Zhang:2016wx
+Warning--empty address in Zhang:2016wx
+Warning--no number and no volume in Zhang:2013wq
+Warning--empty publisher in pmlr-v37-zhangb15
+Warning--empty address in pmlr-v37-zhangb15
+You've used 26 entries,
+            5727 wiz_defined-function locations,
+            1448 strings with 20485 characters,
+and the built_in function-call counts, 32638 in all, are:
+= -- 3767
+> -- 1517
+< -- 0
++ -- 507
+- -- 506
+* -- 2537
+:= -- 3518
+add.period$ -- 136
+call.type$ -- 26
+change.case$ -- 218
+chr.to.int$ -- 24
+cite$ -- 65
+duplicate$ -- 2746
+empty$ -- 1920
+format.name$ -- 597
+if$ -- 7666
+int.to.chr$ -- 4
+int.to.str$ -- 1
+missing$ -- 96
+newline$ -- 244
+num.names$ -- 208
+pop$ -- 1119
+preamble$ -- 1
+purify$ -- 448
+quote$ -- 0
+skip$ -- 966
+stack$ -- 0
+substring$ -- 2200
+swap$ -- 270
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 641
+warning$ -- 39
+while$ -- 178
+width$ -- 0
+write$ -- 473
+(There were 39 warnings)

@@ -1,0 +1,968 @@
+
+
+\documentclass[journal]{IEEEtran}
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[10pt,journal,compsoc]{../sty/IEEEtran}
+
+
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+% to compile a camera-ready version, add the [final] option, e.g.:
+%\usepackage{cite}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{tabularx}
+\usepackage{pifont}
+\usepackage[noend]{algpseudocode}
+\usepackage{bm}
+\usepackage{array}
+\usepackage{balance}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{fullpage}
+\usepackage{color}
+
+\def\rc{\color{red}}
+
+\usepackage[colorlinks=exact]{hyperref}       % hyperlinks
+%\usepackage{natbib}
+\allowdisplaybreaks
+
+
+\input{yaweinewcomm}
+\newcommand\algotext[1]{\end{algorithmic}#1\begin{algorithmic}[1]}
+
+\def\NoNumber#1{{\def\alglinenumber##1{}\State #1}\addtocounter{ALG@line}{-1}}
+
+ \newtheorem{Definition}{\bf{Definition}}
+ \newtheorem{Theorem}{\bf{Theorem}}
+ \newtheorem{reTheorem}[Theorem]{\bf{Theorem}}
+ \newtheorem{Lemma}{\bf{Lemma}}
+ \newtheorem{reLemma}[Lemma]{\bf{Lemma}}
+ \newtheorem{Corollary}{\bf{Corollary}}
+ \newtheorem{reCorollary}[Corollary]{\bf{Corollary}}
+ \newtheorem{Assumption}{\bf{Assumption}}
+ \newtheorem{Proposition}{\bf{Proposition}}
+ \newtheorem{Remark}{\bf{Remark}}
+
+% *** CITATION PACKAGES ***
+%
+\ifCLASSOPTIONcompsoc
+  % IEEE Computer Society needs nocompress option
+  % requires cite.sty v4.0 or later (November 2003)
+  \usepackage[nocompress]{cite}
+\else
+  % normal IEEE
+  \usepackage{cite}
+\fi
+
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% Titles are generally capitalized except for words such as a, an, and, as,
+% at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
+% not capitalized unless they are the first or last word of the title.
+% Linebreaks \\ can be used within to get better formatting as desired.
+% Do not put math or special symbols in the title.
+\title{Understand Dynamic Regret with Switching Cost for Online Decision Making}
+
+
+\author{Yawei Zhao, Xingxing Zhang, En Zhu$^\ast$, Xinwang Liu, and Jianping Yin$^\ast$  % <-this % stops a space
+\thanks{${\ast}$ represents the corresponding authors.}
+\IEEEcompsocitemizethanks{\IEEEcompsocthanksitem Yawei Zhao, En Zhu, and Xinwang Liu are with the School of Computer, National University of Defense Technology, Changsha, Hunan, 410073, China. Email: \{zhaoyawei, enzhu, xinwangliu\}@nudt.edu.cn. \protect \\
+\IEEEcompsocthanksitem Xingxing Zhang is with the Institute of Information Science, Beijing Jiaotong University, Beijing 100044, China, and also with the Beijing Key Laboratory of Advanced Information Science and Network Technology, Beijing Jiaotong University, Beijing 100044, China. Email: zhangxing@bjtu.edu.cn. \protect \\
+\IEEEcompsocthanksitem Jianping Yin is with the School of Computer, Dongguan University of Technology, Dongguan, Guangdong, 523808, China. Email: jpyin@dgut.edu.cn. \protect \\
+% note need leading \protect in front of \\ to get a newline within \thanks as
+% \\ is fragile and will error, could use \hfil\break instead.
+%E-mail: see http://www.michaelshell.org/contact.html
+%\IEEEcompsocthanksitem J. Doe and J. Doe are with Anonymous University.
+}% <-this % stops an unwanted space
+%\thanks{Manuscript received April 19, 2005; revised August 26, 2015.}
+}
+
+
+% for Computer Society papers, we must declare the abstract and index terms
+% PRIOR to the title within the \IEEEtitleabstractindextext IEEEtran
+% command as these need to go into the title area created by \maketitle.
+% As a general rule, do not put math, special symbols or citations
+% in the abstract or keywords.
+\IEEEtitleabstractindextext{%
+\begin{abstract}
+
+As a metric to measure the performance of an online method, dynamic regret with switching cost has drawn much attention for online decision making problems.  Although the sublinear regret has been provided in many previous researches, we still have little knowledge about the relation between the \textit{dynamic regret} and the \textit{switching cost}. In the paper, we investigate the relation for two classic online settings: Online Algorithms (OA) and Online Convex Optimization (OCO). We provide a new theoretical analysis framework, which shows an interesting observation, that is, the relation between the switching cost and the dynamic regret is different for settings of OA and OCO. Specifically, the switching cost has significant impact on the dynamic regret in the setting of OA.  But, it does not have an impact on the dynamic regret in the setting of OCO. Furthermore, we provide a lower bound of regret for the setting of OCO, which is same with the lower bound in the case of no switching cost. It shows that the switching cost does not change the difficulty of online decision making problems in the setting of OCO.
+
+
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+\begin{IEEEkeywords}
+Online decision making, dynamic regret, switching cost, online algorithms, online convex optimization, online mirror descent.
+\end{IEEEkeywords}}
+
+
+% make the title area
+\maketitle
+
+
+% To allow for easy dual compilation without having to reenter the
+% abstract/keywords data, the \IEEEtitleabstractindextext text will
+% not be used in maketitle, but will appear (i.e., to be "transported")
+% here as \IEEEdisplaynontitleabstractindextext when the compsoc 
+% or transmag modes are not selected <OR> if conference mode is selected 
+% - because all conference papers position the abstract like regular
+% papers do.
+\IEEEdisplaynontitleabstractindextext
+% \IEEEdisplaynontitleabstractindextext has no effect when using
+% compsoc or transmag under a non-conference mode.
+
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+
+\section{Introduction}
+\label{sect_introduction}
+
+Online Algorithms (OA)\footnote{Some literatures denote OA by `smoothed online convex optimization'.} \cite{pmlr-v75-chen18b,Chen:2016:UPO,renault-101007} and Online Convex Optimization (OCO) \cite{introduction-online-optimization,Hazan2016Introduction,ShalevShwartz:2012dz} are two important settings of online decision making. Methods in both OA and OCO settings are designed to  make a decision at every round, and then use the decision as a response to the environment. Their major difference is outlined as follows.
+\begin{itemize}
+\item For every rounds, methods in the setting of OA are able to know a loss function first, and then play a decision as the response to the environment.
+\item However, for every rounds, methods in the setting of OCO have to play a decision before knowing the loss function. Thus, the environment may be adversarial to the decision of those methods.
+\end{itemize}
+Both of them have a large number of practical scenarios. For example, both the $k$-server problem \cite{Lee:2018wt,Bansal:2010:MTS} and the Metrical Task Systems (MTS) problem \cite{Abernethy:2010,Bubeck:2019vp,Bansal:2010:MTS}  are usually studied in the setting of OA. Other problems include online learning \cite{7401075,Yang:2013:EOL,8610120,8260919},  online recommendation \cite{Wang:2016:IAR}, online classification \cite{NIPS2003_2385,NIPS2010_3896}, online portfolio selection \cite{Li:2013:CWM}, model predictive control \cite{MORARI1999667} are usually studied in the setting of OCO. 
+
+%model predictive control \cite{MORARI1999667}, thermal control \cite{Zanini:147821},
+
+Many recent researches begin to investigate performance of online methods in both OA and OCO settings by using \textit{dynamic regret with switching cost} \cite{pmlr-v75-chen18b,Li:2018uy}. It measures the difference between the cost yielded by real-time decisions and the cost yielded by the optimal decisions.   Comparing with the classic static regret \cite{introduction-online-optimization}, it has two major differences.
+\begin{itemize}
+\item First, it allows optimal decisions to change within a threshold over time, which is necessary in the dynamic environment\footnote{Generally, the dynamic environment means the distribution of the data stream may change over time.}.
+\item Second, the cost yielded by a decision consists of two parts: the \textit{operating cost} and the \textit{switching cost}, while the classic static regret only contains the operating cost.
+\end{itemize} The switching cost measures the difference between two successive decisions, which is needed in many practical scenarios such as service management in electric power network \cite{2b1edbffc}, dynamic resource management in data centers \cite{5934885,6269026,Wang:2014:ESG:2567529.2567556}. However, we still have little knowledge about the relation between the dynamic regret and the switching cost.  In the paper, we are motivated by the following fundamental questions.
+\begin{itemize}
+\item \textit{Does the switching cost help an online method improve the dynamic regret?}
+\item \textit{Does the problem of online decision making  become more difficult due to the switching cost?}
+\end{itemize} 
+
+
+To answer those challenging questions, we investigate online mirror descent in settings of OA and OCO, and provide a new theoretical analysis framework. According to our analysis, we find an interesting observation, that is, \textit{the switching cost does impact on the dynamic regret in the setting of OA. But, it has no impact on the dynamic regret in the setting of OCO.}  Specifically, when the switching cost is measured by $\lrnorm{\x_{t+1} - \x_t}^\sigma$ with $1\le \sigma \le 2$,  the dynamic regret for an OA method is $\Ocal{T^{\frac{1}{\sigma + 1}} D^{\frac{\sigma}{\sigma+1}}}$ where $T$ is the maximal number of rounds, and $D$ is the given budget of dynamics. But, the dynamic regret for an OCO method is $\Ocal{\sqrt{TD} + \sqrt{T}}$, which is same with the case of no switching cost \cite{Gyorgy:2016,Zhao:2018wx,Zinkevich:2003,Hall:2013vr}. Furthermore, we provide a lower bound of dynamic regret, namely $\Omegacal{\sqrt{TD} + \sqrt{T}}$ for the OCO setting. Since the lower bound is still same with the case of no switching cost \cite{Zhao:2018wx}, it implies that \textit{the switching cost does not change the difficulty of the online decision making problem in the OCO setting.} Our main contributions are summarized as follows.
+\begin{itemize}
+\item We propose a new general formulation of the dynamic regret with switching cost, and then develop a new analysis framework based on it.
+\item We provide $\Ocal{T^{\frac{1}{\sigma + 1}} D^{\frac{\sigma}{\sigma+1}}}$ regret with $1\le \sigma\le 2$ for the setting of OA and $\Ocal{\sqrt{TD} + \sqrt{T}}$ regret for the setting of OCO by using the online mirror descent.
+\item We provide a lower bound $\Omegacal{\sqrt{TD} + \sqrt{T}}$ regret for the setting of OCO, which matches with the upper bound.
+\end{itemize}
+  
+
+The paper is organized as follows. Section \ref{sect_related_work} reviews related literatures. Section \ref{sect_preliminary} presents the preliminaries. Section \ref{sect_dynamic_regret_switching_cost_our_formulation} presents our new formulation of the dynamic regret with switching cost. Section \ref{sect_theoretical_analysis} presents a new analysis framework and main results. Section \ref{sect_empirical_study} presents extensive empirical studies. Section \ref{sect_conclusion} conludes the paper, and presents the future work.
+
+\section{Related work}
+\label{sect_related_work}
+In the section, we review related literatures briefly.
+\subsection{Competitive ratio and regret}
+Although the competitive ratio is usually used to analyze OA methods, and the regret is used to analyze OCO methods, recent researches aim to developing unified frameworks to analyze the performance of an online method in both settings \cite{Blum2000,Abernethy:2010,Antoniadis-10.1007,pmlr-v23-buchbinder12,Bubeck:2018:KVM,Andrew:2013:TTM,Chen:2015:OCO}. \cite{Blum2000} provides an analysis framework, which is able to achieve sublinear regret for OA methods and constant competitive ratio for OCO methods. \cite{Abernethy:2010,pmlr-v23-buchbinder12,Bubeck:2018:KVM} uses a general OCO method, namely online mirror descent in the OA setting, and improves the existing competitive ratio analysis for $k$-server and MTS problems. Different from them, we extend the existing regret analysis framework to handle a general switching cost, and focus on investigating the relation between regret and switching cost. \cite{Antoniadis-10.1007} provides a lower bound for the OCO problem in the competitive ratio analysis framework, but we provide the lower bound in the regret analysis framework. \cite{Andrew:2013:TTM,Chen:2015:OCO} studies the regret with switching cost in the OA setting, but the relation between them is not studied. 
+
+
+\subsection{Dynamic regret and switching cost}
+
+Regret is widely used as a metric to measure the performance of OCO methods. When the environment is static, e.g., the distribution of data stream does not change over time, online mirror descent yields $\Ocal{\sqrt{T}}$ regret for convex functions and  $\Ocal{\log T}$ regret for strongly convex functions \cite{introduction-online-optimization,Hazan2016Introduction,ShalevShwartz:2012dz}. When the distribution of data stream changes over time, online mirror descent yields $\Ocal{\sqrt{TD}+\sqrt{T}}$ regret for convex functions \cite{Gyorgy:2016}, where $D$ is the given budget of dynamics. Additionally, switching cost is considered in analysis framework of the dynamic regret \cite{7403279,Shit:2018tz}. Comparing with them, our new analysis framework shows how the switching cost impacts the dynamic regret for settings of OA and OCO, which leads to new insights to understand online decision making problems.
+
+
+\section{Preliminaries}
+\label{sect_preliminary}
+
+\begin{table*}[!h]
+\centering
+\begin{tabular}{c|c|c|c|c}
+\hline 
+Algo. & Make decision first? & Observe $f_t$ first? & Metric & Has SC?\tabularnewline
+\hline 
+\hline 
+OA & no & yes & competitive ratio & yes\tabularnewline
+\hline 
+OCO & yes & no & regret & no\tabularnewline
+\hline 
+\end{tabular}
+\caption{Summary of difference between OA and OCO.  `SC' represents `switching cost'. }
+\label{table_oa_oco_difference}
+\end{table*}
+
+In the section, we present the preliminaries of online algorithms and online convex optimization, and highlight their difference. Then, we present the dynamic regret with switching cost, which is used to measure the performance of both OA methods and OCO methods. 
+
+\subsection{Online algorithms and online convex optimization}
+
+
+Comparing with the setting of OCO \cite{ShalevShwartz:2012dz,Hazan2016Introduction,introduction-online-optimization},  OA has the following major difference. 
+\begin{itemize}
+\item OA assumes that the loss function, e.g., $f_t$, is known before making the decision at every round. But, OCO assumes that the loss function, e.g., $f_t$, is given after making the decision at every round.
+\item The performance of an OA method is measured by using the \textit{competitive ratio}, which is defined by
+\begin{align}
+\nonumber
+\frac{ \left [\sum_{t=1}^T \lrincir{f_t(\x_t) +  \lrnorm{\x_t - \x_{t-1}}}\right ] }{ \left [\sum_{t=1}^T \lrincir{f_t(\x_t^\ast) +  \lrnorm{\x_t^\ast - \x_{t-1}^\ast}}\right ] }.
+\end{align} Here, $\{\x_t^\ast\}_{t=1}^T$ is the best offline strategy, which is yielded by knowing all the requests beforehand. Note that $\lrnorm{\x_t^\ast - \x_{t-1}^\ast}$ is the switching cost yielded by $A$ at the $t$-th round. But, OCO is usually measured by the \textit{regret}, which is defined by
+\begin{align}
+\nonumber
+\sum_{t=1}^T f_t(\x_t) - \min_{\{\z_t\}_{t=1}^T \in \Lcal_D^T}\sum_{t=1}^T f_t(\z_t),
+\end{align} where $\Lcal_D^T := \left \{ \{\z_t\}_{t=1}^T : \sum_{t=1}^{T-1} \lrnorm{\z_{t+1} - \z_t} \le D   \right \}$. $D$ is the given budget of dynamics. Note that the regret in classic OCO algorithm does not contain the switching cost. 
+\end{itemize} To make it clear, we use Table \ref{table_oa_oco_difference} to highlight their differences. 
+
+
+
+
+\subsection{Dynamic regret with switching cost}
+
+Although the analysis framework of OA and OCO is different, the \textit{dynamic regret with switching cost} is a popular metric to measure the performance of both OA and OCO \cite{pmlr-v75-chen18b,Li:2018uy}. Formally, for an algorithm $A$, its dynamic regret with switching cost $\widetilde{\Rcal}_D^A$ is defined by
+\begin{align}
+\label{equa_dynamic_regret_switching_cost_obd}
+\widetilde{\Rcal}_D^A := & \sum_{t=1}^T f_t(\x_t) + \sum_{t=1}^{T-1}\lrnorm{\x_{t+1} - \x_t} \\ \nonumber
+- & \min_{\{\z_t\}_{t=1}^T \in \Lcal_D^T}\lrincir{\sum_{t=1}^T f_t(\z_t) + \sum_{t=1}^{T-1}\lrnorm{\z_{t+1} - \z_t}},
+\end{align} where $\Lcal_D^T := \left \{ \{\z_t\}_{t=1}^T : \sum_{t=1}^{T-1} \lrnorm{\z_{t+1} - \z_t} \le D   \right \}$. Here, $\lrnorm{\x_{t+1} - \x_t}$ represents the switching cost at the $t$-th round. $D$ is the given budget of dynamics in the dynamic environment. When $D=0$, all optimal decisions are same. With the increase of $D$, the optimal decisions are allowed to change to follow the dynamics in the environment. It is necessary when the distribution of data stream changes over time.
+
+\subsection{Notations and Assumptions.} 
+
+We use the following notations in the paper. 
+\begin{itemize}
+\item 
+The bold lower-case letters, e.g., $\x$,  represent vectors.  The normal letters, e.g., $\mu$, represent a scalar number.    
+\item $\lrnorm{\cdot}$ represents a general norm of a vector.  
+\item $\Xcal^T$ represents Cartesian product, namely, $\underbrace{ \Xcal \times \Xcal \times ... \times \Xcal }_{T \text{ times}}$. $\Fcal^T$ has the similar meaning.
+\item Bregman divergence $B_{\Phi}(\x,\y)$ is defined by $ B_\Phi(\x,\y) = \Phi(\x) - \Phi(\y) - \lrangle{\nabla \Phi(\y), \x - \y}$.  
+\item $\Acal$ represents a set of all possible online methods, and $A\in \Acal$ represents some a specific online method. 
+\item $\lesssim$ represents `less than equal up to a constant factor'.
+\item $\EE$ represents the mathematical expectation operator.
+\end{itemize}
+
+Our assumptions are presented as follows. They are widely used in previous literatures \cite{Li:2018uy,pmlr-v75-chen18b,ShalevShwartz:2012dz,Hazan2016Introduction,introduction-online-optimization}.
+\begin{Assumption}
+\label{assumption_basic}
+The following basic assumptions are used throughout the paper.
+\begin{itemize}
+\item For any $t\in[T]$, we assume that $f_t$ is convex, and has $L$-Lipschitz gradient.
+\item The function $\Phi$ is $\mu$-strongly convex, that is, for any $\x\in\Xcal$ and $\y\in\Xcal$,  $ B_{\Phi}(\x,\y) \ge \frac{\mu}{2}\lrnorm{\x-\y}^2 $.
+\item For any $\x\in\Xcal$ and $\y\in\Xcal$, there exists a positive constant $R$ such that $\max \left \{ B_\Phi(\x, \y), \lrnorm{\x - \y}^2 \right \}    \le R^2$.
+\item For any $\x\in\Xcal$, there exists a positive constant $G$ such that $\max \left \{ \lrnorm{\nabla f_t(\x)}^2, \lrnorm{\nabla \Phi(\x)}^2 \right \} \le G^2$.
+\end{itemize}
+ 
+\end{Assumption}
+
+
+
+\section{Dynamic regret with generalized switching cost}
+\label{sect_dynamic_regret_switching_cost_our_formulation}
+In the section, we propose a new formulation of dynamic regret, which contains a generalized switching cost. Then, we highlight the novelty of this formulation, and present the online mirror decent method for setting of OA and OCO.
+
+\subsection{Formulation}
+\label{subsect_formulation}
+
+For an algorithm $A\in \Acal$, it yields a cost at the end of every round, which consists of two parts: \textit{operating cost} and \textit{switching cost}. At the $t$-th round, the \textit{operating cost} is incurred by $f_t(\x_t)$, and the \textit{switching cost} is incurred by $\lrnorm{\x_{t+1} - \x_t}^{\sigma}$ with $1\le \sigma \le 2$. Its total cost is denoted by 
+\begin{align}
+\nonumber
+\text{cost}(A) = \underbrace{\sum_{t=1}^T f_t(\x_t)}_{\text{operating cost}} + \underbrace{\sum_{t=1}^{T-1}\lrnorm{\x_{t+1} - \x_t}^{\sigma}}_{\text{switching cost}}.
+\end{align}
+
+For the algorithm $A\in \Acal$, there exists an optimal method $A^\ast$, which yields the optimal sequence of decisions $\{\y_t^\ast\}_{t=1}^T$. The total cost is denoted by 
+\begin{align}
+\nonumber
+\text{cost}(A^{\ast}) = \sum_{t=1}^T f_t(\y_t^\ast) + \sum_{t=1}^{T-1} \lrnorm{\y_{t+1}^\ast - \y_t^\ast}^{\sigma}, 
+\end{align} where $\{\y_t^\ast\}_{t=1}^T$ is denoted by
+\begin{align}
+\nonumber
+\{\y_t^\ast\}_{t=1}^T = \argmin_{\{\y_t\}_{t=1}^T \in \Lcal_D^T } \sum_{t=1}^T f_t(\y_t) + \sum_{t=1}^{T-1}\lrnorm{\y_{t+1} - \y_t}^{\sigma}.
+\end{align} Here, $\Lcal_D^T$ is denoted by
+\begin{align}
+\nonumber
+\Lcal_D^T = \left\{ \{\y_t\}_{t=1}^T : \sum_{t=1}^{T-1}\lrnorm{\y_{t+1}-\y_t} \le D \right\}.
+\end{align}
+$D$ is a given budget of dynamics, which measures how much the optimal decision, i.e., $\y_t^{\ast}$ can change over $t$. With the increase of $D$, those optimal decisions can change over time to follow the dynamics in the environment effectively.   
+
+\begin{Definition}
+For any algorithm $A\in\Acal$, its dynamic regret $\Rcal_D^A$ with switching cost  is defined by 
+\begin{align}
+\label{equa_our_definition_dynamic_regret_switching_cost}
+\Rcal_D^A :=  \text{cost}(A) - \text{cost}(A^{\ast}).
+\end{align}
+\end{Definition} 
+Our new formulation of the dynamic regret $\Rcal_D^A$ makes a balance between the operating cost and the switching cost, which is different from the previous definition of the dynamic regret in \cite{Zinkevich:2003,Gyorgy:2016,Hall:2013vr}. 
+
+
+Note that the freedom of $\sigma$ with $1 \le \sigma \le 2$ allows our new dynamic regret $\Rcal_D^A$ to measure the performance of online methods for a large number of problems. Some problems such as dynamic control of data centers \cite{Lin:2012:OOS}, stock portfolio management \cite{Li:2014:OPS},  require to be sensitive to  the small change between successive decisions, and the switching cost in these problems is usually bounded by $\lrnorm{\x_{t+1} - \x_t}$.  But, many problems such as dynamic placement of cloud service \cite{6258025:zhang} need to bound the large change between successive decisions effectively, and the switching cost in these problems is usually bounded by $\lrnorm{\x_{t+1} - \x_t}^2$.   
+
+
+
+
+\subsection{Novelty of the new formulation}
+Our new formulation of the dynamic regret is more general than previous formulations \cite{pmlr-v75-chen18b,Li:2018uy}, which are presented as follows. 
+\begin{itemize}
+\item \textbf{Support more general switching cost.} \cite{pmlr-v75-chen18b} defines the dynamic regret  with switching cost  by \eqref{equa_dynamic_regret_switching_cost_obd}. It is a special case of our new formulation \eqref{equa_our_definition_dynamic_regret_switching_cost} by setting $\sigma = 1$. When $\sigma=1$, \eqref{equa_our_definition_dynamic_regret_switching_cost} is more sensitive to the slight change between $\x_{t+1}$ and $\x_t$ than  significant change between them. As we have shown, for some problems such as the dynamic placement of cloud service \cite{6258025:zhang}, the switching cost at the $t$-th round is usually measured by $\lrnorm{\x_{t+1} - \x_t}^2$, instead of $\lrnorm{\x_{t+1} - \x_t}$. The previous formulation in \cite{pmlr-v75-chen18b} is not suitable to bound the switching cost for those problems. 
+\item \textbf{Support more general convex $f_t$.} \cite{Li:2018uy} defines the  the dynamic regret with switching cost by 
+\begin{align}
+\nonumber
+& \sum_{t=1}^T f_t(\x_t) + \sum_{t=1}^{T-1}\lrnorm{\x_{t+1} - \x_t}^2 \\ \nonumber
+&- \min_{\{\z_t\}_{t=1}^T \in \Xcal^T} \lrincir{\sum_{t=1}^T f_t(\z_t) + \sum_{t=1}^{T-1}\lrnorm{\z_{t+1} - \z_t}^2},
+\end{align} and they use 
+\begin{align}
+\nonumber
+\sum_{t=1}^{T-1} \lrnorm{\x_{t+1}^\ast - \x_t^\ast}
+\end{align} to bound the regret. Here, $\x_t^\ast = \argmin_{\x\in\Xcal} f_t(\x)$.  It implicitly assumes that the difference between $\x_{t+1}^\ast$ and $\x_t^\ast$ are bounded. It is reasonable for a strongly convex function $f_t$, but may not be guaranteed for a general convex function $f_t$.  Additionally, \cite{Li:2018uy} uses $\lrnorm{\x_{t+1}^\ast - \x_t^\ast}^2$ to bound the switching cost, which is more sensitive to the significant change between $\x_{t+1}^\ast$ and $\x_t^\ast$. But, it is  less effective to bound the slight change between them, which is not suitable for many problems such as dynamic control of data centers \cite{Lin:2012:OOS}.  
+\end{itemize}
+
+
+
+\begin{algorithm}[!t]
+   \caption{ MD-OA: Online Mirror Descent for OA.}
+   \label{algo_proximal_oa}
+   \begin{algorithmic}[1]
+   \Require The learning rate $\gamma$, and the number of rounds $T$.
+       \For {$t=1,2, ..., T$}
+            \State Observe the loss function $f_t$. \Comment{\textit{Observe $f_t$ first.}}
+            \State Query a gradient $\hat{\g}_t \in \nabla f_{t}(\x_{t-1})$.
+            \State $\x_t = \argmin_{\x \in \Xcal} \lrangle{\hat{\g}_t, \x - \x_{t-1}} + \frac{1}{\gamma}B_{\Phi}(\x, \x_{t-1})$. \Comment{\textit{Play a decision after knowing $f_t$.}}
+       \EndFor
+       \State \textbf{return} $\x_{T}$
+   \end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}[!t]
+   \caption{ MD-OCO: Online Mirror Descent for OCO.}
+   \label{algo_proximal_oco}
+   \begin{algorithmic}[1]
+   \Require The learning rate $\eta$, the number of rounds $T$, and $\x_0$.
+       \For {$t=0,1, ..., T-1$}
+        \State Play $\x_t$. \Comment{\textit{Play a decision first before knowing $f_t$.}}
+        \State Receive a loss function $f_t$.
+        \State Query a gradient $\bar{\g}_t \in \nabla f_t(\x_t)$.
+        \State $\x_{t+1} = \argmin_{\x \in \Xcal} \lrangle{\bar{\g}_t, \x - \x_t} + \frac{1}{\eta}B_{\Phi}(\x, \x_t)$. 
+       \EndFor
+       \State \textbf{return} $\x_{T}$
+   \end{algorithmic}
+\end{algorithm}
+
+
+
+
+
+
+\subsection{Algorithm}
+
+We use mirror descent \cite{BECK2003167} in the online setting, and present the algorithm MD-OA for the OA setting and the algorithm MD-OCO for the OCO setting, respectively. As illustrated in Algorithm \ref{algo_proximal_oa}, MD-OA first observes the loss function $f_t$, and then makes the decision $\x_t$ at the $t$-th round.  But, MD-OCO first makes the decision $\x_t$, and then observe the loss function $f_t$  at the $t$-th round. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Theoretical analysis}
+\label{sect_theoretical_analysis}
+In this section, we present our main analysis results about the proposed dynamic regret for both MD-OA and MD-OCO, and discuss the difference between them. 
+
+\subsection{New bounds for dynamic regret with switching cost}
+
+The upper bound of dynamic regret for MD-OA is presented as follows.
+
+\begin{Theorem}
+\label{theorem_regret_oa_upper_bound}
+
+Choose $\gamma  = \min \left\{ \frac{\mu}{L}, T^{-\frac{1}{1+\sigma}} D^{\frac{1}{1+\sigma}} \right\}$ in Algorithm \ref{algo_proximal_oa}. Under Assumption \ref{assumption_basic}, we have 
+\begin{align}
+\nonumber
+\sup_{\{f_t\}_{t=1}^T \in \Fcal^T}\Rcal_T^{\textsc{MD-OA}}\lesssim T^{\frac{1}{\sigma+1}}D^{\frac{\sigma}{\sigma+1}} + T^{\frac{1}{\sigma+1}} D^{-\frac{1}{\sigma+1}}.
+\end{align} That is,  Algorithm \ref{algo_proximal_oa} yields $\Ocal{T^{\frac{1}{\sigma+1}}D^{\frac{\sigma}{\sigma+1}}}$ dynamic regret with switching cost.
+
+\end{Theorem}
+
+
+\begin{Remark}
+When $\sigma = 1$, MD-OA yields $\Ocal{\sqrt{TD}}$ dynamic regret, which achieves the state-of-the-art result in \cite{pmlr-v75-chen18b}. When $\sigma = 2$, MD-OA yields $\Ocal{T^{\frac{1}{3}}D^{\frac{2}{3}}}$ dynamic regret, which is a new result as far as we know.
+\end{Remark}
+
+
+However, we find different result for MD-OCO. The switching cost does not have an impact on the dynamic regret. 
+
+\begin{Theorem}
+\label{theorem_regret_oco_upper_bound}
+Choose $\eta = \sqrt{\frac{T}{D+G}}$ in Algorithm \ref{algo_proximal_oco}. Under Assumption \ref{assumption_basic}, we have
+\begin{align}
+\nonumber
+\sup_{\{f_{t}\}_{t=1}^T \in \Fcal^T} \Rcal_D^{\textsc{MD-OCO}} \lesssim \sqrt{TD}  + \sqrt{T}.
+\end{align} That is, Algorithm \ref{algo_proximal_oco} yields $\Ocal{\sqrt{DT} + \sqrt{T}}$ dynamic regret with switching cost.
+\end{Theorem} 
+
+
+
+\begin{Remark}
+MD-OCO still yields $\Ocal{\sqrt{TD}  + \sqrt{T}}$ dynamic regret \cite{Gyorgy:2016} when there is no switching cost. It shows that the switching cost does not have an impact on the dynamic regret.
+\end{Remark}
+
+Before presenting the discussion, we show that MD-OCO is the optimum for dynamic regret because the lower bound of the problem matches with the upper bound yielded by MD-OCO. 
+
+\begin{Theorem}
+\label{theorem_lower_bound_oco}
+Under Assumption \ref{assumption_basic}, the lower bound of the dynamic regret for the OCO problem is  
+\begin{align}
+\nonumber
+\inf_{A\in\Acal} \sup_{\{f_{t}\}_{t=1}^T \in \Fcal^T} \Rcal_D^A  = \Omegacal{\sqrt{TD} + \sqrt{T}}.
+\end{align}
+\end{Theorem}
+
+
+
+\begin{Remark}
+When there is no switching cost, the lower bound of dynamic regret for OCO is $\Ocal{\sqrt{TD}+\sqrt{T}}$ \cite{Zhao:2018wx}. The lower bound, namely, Theorem \ref{theorem_lower_bound_oco} implies that the switching cost does not make the online decision making problem in the OCO setting more difficult. 
+\end{Remark}
+
+\subsection{Insights}
+
+\textbf{Switching cost has a significant impact on the dynamic regret for the setting of OA.} According to Theorem \ref{theorem_regret_oa_upper_bound}, the switching cost has a significant impact on the dynamic regret of MD-OA. Given a constant $D$, a small $\sigma$ leads to a strong dependence on $T$, and  a large $\sigma$ leads to a weak dependence on $T$. The reason is that  a large $\sigma$ leads to a large learning rate, which is more effective to follow the dynamics in the environment than a small learning rate. 
+
+\textbf{Switching cost does not have an impact on the dynamic regret for the setting of OCO.} According to Theorem 
+\ref{theorem_regret_oco_upper_bound} and Theorem \ref{theorem_lower_bound_oco},  the dynamic regret yielded by MD-OCO is tight, and MD-OCO is the optimum for the problem. Although the switching cost exists, the dynamic regret yielded by MD-OCO does not have any difference. 
+
+As we can see, there is a significant difference between the OA setting and the OCO setting. The reasons are presented as follows.
+\begin{itemize}
+\item MD-OA makes decisions after observing the loss function. It has known the potential operating cost and switching cost for any decision. Thus, it can make decisions to achieve a good tradeoff between the operating cost and switching cost.  
+\item MD-OCO make decisions before observing the loss function. It only knows the  historical information and the potential switching cost, and does not know the potential operating cost for any decision at the current round. In the worst case, if the environment provides an adversary loss function to maximize the operating cost based on the decision played by MD-OCO, MD-OCO has to lead to $\Ocal{\sqrt{TD}+\sqrt{T}}$ regret even for the case of no switching cost \cite{Gyorgy:2016}. Although the potential switching cost is known, MD-OCO cannot make a better decision to reduce the regret due to unknown operating cost. 
+\end{itemize}
+
+
+
+\begin{figure*}[!]
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{0pt}
+\centering 
+\subfigure[\textit{usenet1}, total loss, $\sigma = 1$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet1_sigma1}\label{figure_ave_loss_usenet1_sigma1}}
+\subfigure[\textit{usenet1}, total loss, $\sigma = 1.5$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet1_sigma1_5}\label{figure_ave_loss_usenet1_sigma1_5}}
+\subfigure[\textit{usenet1}, total loss, $\sigma = 2$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet1_sigma2}\label{figure_ave_loss_usenet1_sigma2}}
+\subfigure[\textit{usenet1}, separated loss, $\sigma = 1$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet1_sigma1_separate}\label{figure_ave_loss_usenet1_sigma1_separate}}
+\subfigure[\textit{usenet1}, separated loss, $\sigma = 1.5$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet1_sigma1_5_separate}\label{figure_ave_loss_usenet1_sigma1_5_separate}}
+\subfigure[\textit{usenet1}, separated loss, $\sigma = 2$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet1_sigma2_separate}\label{figure_ave_loss_usenet1_sigma2_separate}}
+\caption{ OCO leads to large average loss than OA on the dataset \textit{usenet1}. The superiority becomes significant for a large $\sigma$. }
+\label{figure_ave_loss_real_usenet1}
+\end{figure*}
+
+\begin{figure*}[!]
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{0pt}
+\centering 
+\subfigure[\textit{usenet2}, total loss, $\sigma = 1$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet2_sigma1}\label{figure_ave_loss_usenet2_sigma1}}
+\subfigure[\textit{usenet2}, total loss, $\sigma = 1.5$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet2_sigma1_5}\label{figure_ave_loss_usenet2_sigma1_5}}
+\subfigure[\textit{usenet2}, total loss, $\sigma = 2$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet2_sigma2}\label{figure_ave_loss_usenet2_sigma2}}
+\subfigure[\textit{usenet2}, separated loss, $\sigma = 1$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet2_sigma1_separate}\label{figure_ave_loss_usenet2_sigma1_separate}}
+\subfigure[\textit{usenet2}, separated loss, $\sigma = 1.5$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet2_sigma1_5_separate}\label{figure_ave_loss_usenet2_sigma1_5_separate}}
+\subfigure[\textit{usenet2}, separated loss, $\sigma = 2$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_usenet2_sigma2_separate}\label{figure_ave_loss_usenet2_sigma2_separate}}
+\caption{ OCO leads to large average loss than OA on the dataset \textit{usenet2}. The superiority becomes significant for a large $\sigma$.}
+\label{figure_ave_loss_real_usenet2}
+\end{figure*}
+
+
+\begin{figure*}[!]
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{0pt}
+\centering 
+\subfigure[\textit{spam}, total loss, $\sigma = 1$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_spam_sigma1}\label{figure_ave_loss_spam_sigma1}}
+\subfigure[\textit{spam}, total loss, $\sigma = 1.5$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_spam_sigma1_5}\label{figure_ave_loss_spam_sigma1_5}}
+\subfigure[\textit{spam}, total loss, $\sigma = 2$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_spam_sigma2}\label{figure_ave_loss_spam_sigma2}}
+\subfigure[\textit{spam}, separated loss, $\sigma = 1$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_spam_sigma1_separate}\label{figure_ave_loss_spam_sigma1_separate}}
+\subfigure[\textit{spam}, separated loss, $\sigma = 1.5$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_spam_sigma1_5_separate}\label{figure_ave_loss_spam_sigma1_5_separate}}
+\subfigure[\textit{spam}, separated loss, $\sigma = 2$]{\includegraphics[width=0.65\columnwidth]{figures/figure_ave_loss_spam_sigma2_separate}\label{figure_ave_loss_spam_sigma2_separate}}
+\caption{ OCO leads to large average loss than OA on the dataset \textit{spam}. The superiority becomes significant for a large $\sigma$.}
+\label{figure_ave_loss_real_spam}
+\end{figure*}
+
+
+
+
+
+
+\begin{figure}[!]
+\setlength{\abovecaptionskip}{0pt}
+\setlength{\belowcaptionskip}{0pt}
+\centering 
+\includegraphics[width=0.85\columnwidth]{figures/figure_difference_switching_cost}
+\caption{ OCO leads to more average loss caused by switching cost than OA, especially for a large $\sigma$. }
+\label{figure_ave_loss_difference_switching_cost}
+\end{figure}
+
+
+
+\section{Empirical studies}
+\label{sect_empirical_study}
+In this section, we evaluate the total regret and the switching regret of online mirror decent in settings of both OA and OCO. Our experiments show the importance of knowing loss function before making a decision. 
+
+\subsection{Experimental settings}
+We conduct binary classification by using the logistic regression model. Given an instance $\a\in\RR^d$ and its label $y\in\{1,-1\}$, the loss function is
+\begin{align}
+\nonumber
+f(\x) = \log\lrincir{1+\exp\lrincir{-y\a\Tr\x}}.
+\end{align} In experiments, we let $\Phi(\x) = \frac{1}{2}\lrnorm{\x}^2$. We test both OA, i.e., Algorithm \ref{algo_proximal_oa}, and OCO, i.e., Algorithm \ref{algo_proximal_oco}, on three real datasets: \textit{usenet1}\footnote{\url{http://lpis.csd.auth.gr/mlkd/usenet1.rar}}, \textit{usenet2}\footnote{\url{http://lpis.csd.auth.gr/mlkd/usenet2.rar}}, and \textit{spam}\footnote{\url{http://lpis.csd.auth.gr/mlkd/concept_drift/spam_data.rar}}. The distribution of data streams changes over time for those datasets, which is just the dynamic environment as we have discussed. More details about those datasets  and its dynamics are presented at \url{http://mlkd.csd.auth.gr/concept_drift.html}.
+
+We use the \textit{average loss} to test the regret of both OA and OCO, because they have the same optimal reference points $\{\y_t^\ast\}_{l=1}^t$. For the $t$-th round, the average loss is defined by 
+\begin{align}
+\nonumber
+& \underbrace{\frac{1}{t}\sum_{l=1}^t \log\lrincir{1+\exp\lrincir{-\y_l\A_l\Tr\x_l}} }_{\text{average loss caused by operating cost}}\\ \nonumber 
+& + \underbrace{\frac{1}{t}\sum_{l=0}^{t-1}\lrnorm{\x_{l+1} - \x_l}}_{\text{average loss caused by switching cost}},
+\end{align} where $\A_l$ is the instance at the $l$-th round, and $\y_l$ is its label. Besides, we evaluate the average loss caused by operating cost separately, and denote it by OA-OL and OCO-OL, respectively. Similarly, OA-SL and OCO-SL represent the average loss caused by switching cost. For both OA and OCO, the learning rate is choosen to be optimal in all experiments. 
+ 
+ 
+
+
+\subsection{Numerical results}
+
+As shown in Figures \ref{figure_ave_loss_real_usenet1}, OA is much more effcetive than OCO to decrease the average loss during a few rounds of begining. OA yields much smaller average loss than OCO, which means OA is more effective for the online decision making than OCO. It matches with our theoretical analysis. That is, Algorithm \ref{algo_proximal_oa} leads to $\Ocal{T^{\frac{1}{1+\sigma}}D^{\frac{\sigma}{1+\sigma}}}$ regret, but Algorithm \ref{algo_proximal_oco} leads to $\Ocal{\sqrt{TD}+\sqrt{T}}$ regret. When $\sigma \ge 1$, OA tends to smaller regret than OCO. The reason is that OA knows the potential loss before playing a decision for every round. But, OCO works in an adversary environment, and it has to play a decision before knowing the potential loss.  Thus, OA is able to play a better decision than OCO to decrease the loss. Additionally, we observe that OA reduces much more average loss than OCO for a large $\sigma$, which validates our theoretical results nicely. It means that OA is more effective to reduce the switching cost than OCO for a large $\sigma$. Specifically, as shown in Figures \ref{figure_ave_loss_usenet1_sigma1_separate}-\ref{figure_ave_loss_usenet1_sigma2_separate}, the average loss caused by switching cost of OA, i.e., OA-SL, has unsignificant changes, but that of OCO, i.e., OCO-SL, has remarkable increase for a large $\sigma$. 
+
+Figures \ref{figure_ave_loss_real_usenet2}-\ref{figure_ave_loss_real_spam} illustrate similar observations. When handling the whole dataset, the final difference of switching cost between OA and OCO is shown in Figure \ref{figure_ave_loss_difference_switching_cost}. Here, the difference of switching cost is measured by using \textit{average loss caused by switching cost} of OCO minus \textit{average loss caused by switching cost} of OA. As we can see, it highlights that OA is more effective to decrease the switching cost. The superiority becomes significant for a large $\sigma$, which verifies our theoretical result nicely again.  
+
+
+
+
+
+
+\section{Conclusion and future work}
+\label{sect_conclusion}
+We propose a new  dynamic regret with switching cost,  and provide a new analysis framework for both online algorithms and online convex optimization.  We find that  the switching cost significantly impacts on the regret yielded by OA methods, but does not have an impact on the regret yielded by OCO methods. Empirical studies validate our theoretical result.
+
+Moreover, the switching cost in the paper is measured by using the norm of the difference between two successive decisions, that is, $\lrnorm{\x_{t+1} - \x_t}$. It is interesting to investigate whether the work can be extended to a more general distance measure function such as Bregman divergence $d_B(\x_{t+1}, \x_t)$ or Mahalanobis distance $d_M(\x_{t+1}, \x_t)$. Specifically, if the Bregman divergence\footnote{See details in \url{https://en.wikipedia.org/wiki/Bregman_divergence}.} is used, the switching cost is thus $d_B(\x_{t+1}, \x_t) = \psi(\x_{t+1}) - \psi(\x_t) - \lrangle{\nabla \psi(\x_t), \x_{t+1} - \x_t}$, where $\psi(\cdot)$ is a differentiable distance function.   If the Mahalanobis distance\footnote{See details in \url{https://en.wikipedia.org/wiki/Mahalanobis_distance}.} is used, the switching cost is thus $d_M(\x_{t+1}, \x_t) = \sqrt{(\x_{t+1} - \x_t)\Tr \S (\x_{t+1} - \x_t)}$, where $\S$ is the given covariance matrix. We leave the potential extension as the future work. 
+
+
+
+\section*{Appendix}
+
+\begin{Lemma}
+\label{lemma_mirror_descent_update_rule}
+\nonumber
+Given any vectors $\g$, $\u_t\in\Xcal$, $\u^\ast\in\Xcal$ , and a constant scalar $\lambda>0$, if 
+\begin{align}
+\nonumber
+\u_{t+1} = \argmin_{\u\in\Xcal} \lrangle{\g, \u - \u_t} + \frac{1}{\lambda} B_{\Phi}(\u, \u_t),
+\end{align} we have
+\begin{align}
+\nonumber
+& \lrangle{\g, \u_{t+1} - \u^\ast} \\ \nonumber 
+\le & \frac{1}{\lambda}\lrincir{ B_{\Phi}(\u^\ast, \u_t) -  B_{\Phi}(\u^\ast, \u_{t+1}) - B_{\Phi}(\u_{t+1}, \u_t) }.
+\end{align}
+\end{Lemma}
+\begin{proof}
+
+Denote $h(\u) = \lrangle{\g, \u-\u_t} + \frac{1}{\lambda}B_{\Phi}(\u, \u_t)$, and $\u_{\tau} = \u_{t+1} + \tau (\u^\ast - \u_{t+1})$. According to the optimality of $\x_t$, we have
+\begin{align}
+\nonumber
+&0 \le  h(\u_\tau) - h(\u_{t+1}) \\ \nonumber
+= & \lrangle{\g, \u_\tau - \u_{t+1}} + \frac{1}{\lambda}\lrincir{B_{\Phi}(\u_\tau, \u_t) - B_{\Phi}(\u_{t+1}, \u_t)} \\ \nonumber
+= & \lrangle{\g, \tau (\u^\ast - \u_{t+1})} \\ \nonumber
+& + \frac{1}{\lambda}\lrincir{ \Phi(\u_\tau) - \Phi(\u_{t+1})  + \lrangle{\nabla \Phi(\u_t), \tau (\u_{t+1} - \u^\ast)} } \\ \nonumber
+\le & \lrangle{\g, \tau (\u^\ast - \u_{t+1})} + \frac{1}{\lambda} \lrangle{\nabla \Phi(\u_{t+1}), \tau (\u^\ast - \u_{t+1})} \\ \nonumber
+& + \frac{1}{\lambda} \lrangle{\nabla \Phi(\u_t), \tau (\u_{t+1} - \u^\ast)}  \\ \nonumber
+= & \lrangle{\g, \tau (\u^\ast - \u_{t+1})}  \\ \nonumber
+& + \frac{1}{\lambda} \lrangle{\nabla \Phi(\u_t)-\Phi(\u_{t+1}), \tau (\u_{t+1} - \u^\ast)}.
+\end{align} Thus, we have
+\begin{align}
+\nonumber
+& \lrangle{\g, \u_{t+1} - \u^\ast} \le \frac{1}{\lambda} \lrangle{\nabla \Phi(\u_t)-\Phi(\u_{t+1}), \u_{t+1} - \u^\ast}  \\ \nonumber
+= & \frac{1}{\lambda}\lrincir{ B_{\Phi}(\u^\ast, \u_t) -  B_{\Phi}(\u^\ast, \u_{t+1}) - B_{\Phi}(\u_{t+1}, \u_t) }.
+\end{align} It completes the proof.
+\end{proof}
+
+\begin{Lemma}
+\label{lemma_dynamic_regret_bound}
+For any $\x\in\Xcal$, we have
+\begin{align}
+\label{equa_theorem_upper_bound_oa_temp2}
+B_\Phi(\y_{t+1}^\ast, \x) - B_{\Phi}(\y_t^\ast, \x) \le  2G \lrnorm{\y_{t+1}^\ast - \y_t^\ast}.
+\end{align}
+\end{Lemma}
+\begin{proof}
+
+According to the third-point identity of the Bregman divergence, we have
+\begin{align}
+\nonumber
+&  B_\Phi(\y_{t+1}^\ast, \x) - B_{\Phi}(\y_t^\ast, \x) \\ \nonumber
+= & \lrangle{\nabla \Phi(\y_{t+1}^\ast) - \nabla \Phi(\x), \y_{t+1}^\ast - \y_t^\ast} - B_{\Phi}(\y_t^\ast, \y_{t+1}^\ast) \\ \nonumber
+\refabovecir{\le}{\textcircled{1}} &  \lrangle{\nabla \Phi(\y_{t+1}^\ast) - \nabla \Phi(\x), \y_{t+1}^\ast - \y_t^\ast} \\ \nonumber
+\le & \lrnorm{\nabla \Phi(\y_{t+1}^\ast) - \nabla \Phi(\x)} \lrnorm{ \y_{t+1}^\ast - \y_t^\ast} \\ \nonumber
+\le & \lrincir{\lrnorm{\nabla \Phi(\y_{t+1}^\ast)} + \lrnorm{ \nabla \Phi(\x)}} \lrnorm{ \y_{t+1}^\ast - \y_t^\ast} \\ \label{equa_theorem_upper_bound_oa_temp2}
+\le & 2G \lrnorm{\y_{t+1}^\ast - \y_t^\ast}.
+\end{align} $\textcircled{1}$ holds because $B_{\Phi}(\u,\v) \ge 0$ holds for any vectors $\u$ and $\v$. It completes the proof.
+\end{proof}
+
+
+
+
+\begin{Lemma}
+\label{lemma_distance_between_x_oa}
+Given $\x_{t-1}\in\Xcal$ and $\hat{\g}_t$, if $\x_t = \argmin_{\x \in \Xcal} \lrangle{\hat{\g}_t, \x - \x_{t-1}} + \frac{1}{\gamma}B_{\Phi}(\x, \x_{t-1})$, we have
+\begin{align}
+\nonumber
+\lrnorm{\x_t - \x_{t-1}} \le \frac{2 G \gamma}{\mu}.
+\end{align}
+\end{Lemma}
+\begin{proof}
+
+\begin{align}
+\nonumber
+& \lrangle{\hat{\g}_t, \x_t - \x_{t-1}} + \frac{\mu}{2\gamma} \lrnorm{\x_t - \x_{t-1}}^2 \\ \nonumber
+\refabovecir{\le}{\textcircled{1}} & \lrangle{\hat{\g}_t, \x_t - \x_{t-1}} + \frac{1}{\gamma} B_{\Phi}(\x_t, \x_{t-1}) \refabovecir{\le}{\textcircled{2}}  0.
+\end{align} $\textcircled{1}$ holds due to $\Phi$ is $\mu$-strongly convex, and $\textcircled{2}$ holds due to the optimality of $\x_t$. Thus, 
+\begin{align}
+\nonumber
+& \frac{\mu}{2\gamma} \lrnorm{\x_t - \x_{t-1}}^2 \le \lrangle{\hat{\g}_t, -\x_t + \x_{t-1}} \\ \nonumber
+\le & \lrnorm{\hat{\g}_t} \lrnorm{ -\x_t + \x_{t-1}} \\ \nonumber
+\le & G \lrnorm{ -\x_t + \x_{t-1}}.
+\end{align} That is, 
+\begin{align}
+\nonumber
+\lrnorm{\x_t - \x_{t-1}} \le \frac{2 G \gamma}{\mu}.
+\end{align}
+It completes the proof.
+\end{proof}
+
+
+\textbf{Proof to Theorem \ref{theorem_regret_oa_upper_bound}:}
+\begin{proof}
+
+\begin{align}
+\nonumber
+& f_t(\x_t) - f_t(\y_t^{\ast}) \\ \nonumber
+= & f_t(\x_t) - f_t(\x_{t-1}) + f_t(\x_{t-1}) - f_t(\y_t^{\ast}) \\ \nonumber
+\le & f_t(\x_t) - f_t(\x_{t-1}) +\lrangle{\hat{\g}_t, \x_{t-1} - \y_t^{\ast}} \\ \nonumber
+= & f_t(\x_t) - f_t(\x_{t-1}) - \lrangle{\hat{\g}_t, \x_t - \x_{t-1}} +  \lrangle{\hat{\g}_t, \x_t - \y_t^{\ast}} \\ \nonumber
+\refabovecir{\le}{\textcircled{1}} & \frac{L}{2}\lrnorm{\x_{t-1} - \x_t}^2 +  \lrangle{\hat{\g}_t, \x_t - \y_t^{\ast}} \\ \nonumber
+\refabovecir{\le}{\textcircled{2}} & \frac{L}{2}\lrnorm{\x_{t-1} - \x_t}^2  \\ \nonumber
+& + \frac{1}{\gamma}\lrincir{ B_{\Phi}(\y_t^\ast, \x_{t-1}) -  B_{\Phi}(\y_t^\ast, \x_t) - B_{\Phi}(\x_t, \x_{t-1}) } \\ \nonumber
+\refabovecir{\le}{\textcircled{3}} & \frac{L\gamma-\mu}{2\gamma}\lrnorm{\x_{t-1} - \x_t}^2 \\ \nonumber
+& + \frac{1}{\gamma}\lrincir{ B_{\Phi}(\y_t^\ast, \x_{t-1}) -  B_{\Phi}(\y_t^\ast, \x_t)} \\ \label{equa_theorem_upper_bound_oa_temp1}
+\refabovecir{\le}{\textcircled{4}} & \frac{1}{\gamma}\lrincir{ B_{\Phi}(\y_t^\ast, \x_{t-1}) -  B_{\Phi}(\y_t^\ast, \x_t)}.
+\end{align} $\textcircled{1}$ holds because $f_t$ has $L$-Lipschitz gradient. $\textcircled{2}$ holds due to Lemma \ref{lemma_mirror_descent_update_rule} by setting $\g = \hat{\g}_t$, $\u_t = \x_{t-1}$, $\u_{t+1} = \x_t$, $\u^\ast = \y_t^\ast$, and $\lambda = \gamma$. $\textcircled{3}$ holds because that $\Phi$ is $\mu$-strongly convex, that is, $B_{\Phi}(\x_t, \x_{t-1}) \ge \frac{\mu}{2}\lrnorm{\x_t - \x_{t-1}}^2$. $\textcircled{4}$ holds due to $\gamma \le \frac{\mu}{L}$.
+
+
+Thus, we have
+\begin{align}
+\nonumber
+&\sum_{t=1}^T \lrincir{f_t(\x_t) - f_t(\y_t^{\ast}) + \lrnorm{\x_t - \x_{t-1}}^{\sigma} } \\ \nonumber
+& - \sum_{t=1}^T \lrnorm{\y_t^\ast - \y_{t-1}^\ast}^{\sigma}  \\ \nonumber 
+\le &\sum_{t=1}^T \lrincir{f_t(\x_t) - f_t(\y_t^{\ast}) + \lrnorm{\x_t - \x_{t-1}}^{\sigma} } \\ \nonumber
+\refabovecir{\le}{\textcircled{1}} & \sum_{t=1}^T\lrnorm{\x_t - \x_{t-1}}^{\sigma}\\ \nonumber
+&  + \frac{1}{\gamma}\sum_{t=1}^T\lrincir{ B_{\Phi}(\y_t^\ast, \x_{t-1}) -  B_{\Phi}(\y_t^\ast, \x_t)} \\ \nonumber
+= & \sum_{t=1}^T\lrnorm{\x_t - \x_{t-1}}^{\sigma}\\ \nonumber
+&  + \frac{1}{\gamma}\lrincir{B_{\Phi}(\y_1^\ast, \x_0) - B_{\Phi}(\y_T^\ast, \x_T)} \\ \nonumber
+& + \frac{1}{\gamma}\sum_{t=1}^{T-1}\lrincir{ B_{\Phi}(\y_{t+1}^\ast, \x_t) -  B_{\Phi}(\y_t^\ast, \x_t)} \\ \nonumber
+\refabovecir{\le}{\textcircled{2}} & \sum_{t=1}^T\lrnorm{\x_t - \x_{t-1}}^{\sigma} + \frac{2G}{\gamma}\sum_{t=1}^{T-1}\lrnorm{\y_{t+1}^{\ast} - \y_t^{\ast}} \\ \nonumber
+& + \frac{1}{\gamma}\lrincir{B_{\Phi}(\y_1^{\ast}, \x_0) - B_{\Phi}(\y_T^{\ast}, \x_T)} \\ \nonumber
+\le & \sum_{t=1}^T\lrnorm{\x_t - \x_{t-1}}^{\sigma} + \frac{2G}{\gamma}\sum_{t=1}^{T-1}\lrnorm{\y_{t+1}^{\ast} - \y_t^{\ast}} \\ \nonumber
+& + \frac{1}{\gamma} B_{\Phi}(\y_1^{\ast}, \x_0) \\ \nonumber
+\le & \sum_{t=1}^T\lrnorm{\x_t - \x_{t-1}}^{\sigma} + \frac{2GD}{\gamma} + \frac{R^2}{\gamma} \\ \nonumber
+\refabovecir{\le}{\textcircled{3}} & \lrincir{\frac{2 G }{\mu}}^{\sigma} \gamma^{\sigma} T + \frac{2GD + R^2}{\gamma}.
+\end{align} $\textcircled{1}$ holds due to \eqref{equa_theorem_upper_bound_oa_temp1}. 
+$\textcircled{2}$ holds due to
+\begin{align}
+\nonumber
+B_\Phi(\y_{t+1}^\ast, \x_t) - B_{\Phi}(\y_t^\ast, \x_t) \le  2G \lrnorm{\y_{t+1}^\ast - \y_t^\ast}
+\end{align} according to Lemma \ref{lemma_dynamic_regret_bound}. $\textcircled{3}$ holds due to Lemma \ref{lemma_distance_between_x_oa}.
+
+Choose $\gamma = \min \left\{ \frac{\mu}{L}, T^{-\frac{1}{1+\sigma}} D^{\frac{1}{1+\sigma}} \right\}$. We have
+\begin{align}
+\nonumber
+&\sum_{t=1}^T \lrincir{f_t(\x_t) - f_t(\y_t^{\ast}) + \lrnorm{\x_t - \x_{t-1}}^{\sigma} } \\ \nonumber
+& - \sum_{t=1}^T \lrnorm{\y_t^\ast - \y_{t-1}^\ast}^{\sigma}  \\ \nonumber 
+\le  & \lrincir{\frac{2 G }{\mu}}^{\sigma} T^{\frac{1}{\sigma+1}}D^{\frac{\sigma}{\sigma+1}} \\ \nonumber
++ &\max\left\{  \frac{L(2GD + R^2)}{\mu}, T^{\frac{1}{\sigma+1}} \lrincir{2G D^{\frac{\sigma}{\sigma+1}} + R^2 D^{-\frac{1}{\sigma+1}} } \right\}\\ \nonumber
+\lesssim & T^{\frac{1}{\sigma+1}}D^{\frac{\sigma}{\sigma+1}} + T^{\frac{1}{\sigma+1}} D^{-\frac{1}{\sigma+1}}.
+\end{align} 
+
+Since it holds for any seqence $\{f_t\}_{t=1}^T \in \Fcal^T$, we finally obtain
+\begin{align}
+\nonumber
+\sup_{\{f_t\}_{t=1}^T \in \Fcal^T}\Rcal_T^{\textsc{MD-OA}}
+\lesssim & T^{\frac{1}{\sigma+1}}D^{\frac{\sigma}{\sigma+1}} + T^{\frac{1}{\sigma+1}} D^{-\frac{1}{\sigma+1}}.
+\end{align} 
+It completes the proof.
+\end{proof}
+
+
+\textbf{Proof to Theorem \ref{theorem_regret_oco_upper_bound}:} 
+\begin{proof}
+
+
+\begin{align}
+\nonumber
+& f_t(\x_t) -f_t(\y_t^\ast)  \le \lrangle{\bar{\g}_t, \x_t - \y_t^\ast } \\ \nonumber
+= & \lrangle{\bar{\g}_t, \x_t - \x_{t+1}} + \lrangle{\bar{\g}_t, \x_{t+1} - \y_t^\ast } \\ \nonumber
+\refabovecir{\le}{\textcircled{1}} & \lrangle{\bar{\g}_t, \x_t - \x_{t+1}} \\ \nonumber
+& + \frac{1}{\eta}\lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_t^\ast, \x_{t+1}) - B_{\Phi}(\x_{t+1}, \x_t) } \\ \nonumber
+\refabovecir{\le}{\textcircled{2}} & \lrangle{\bar{\g}_t, \x_t - \x_{t+1}}  - \frac{\mu}{2\eta} \lrnorm{\x_{t+1} - \x_t}^2 \\ \nonumber
+& + \frac{1}{\eta}\lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_t^\ast, \x_{t+1}) } \\ \nonumber
+\refabovecir{\le}{\textcircled{3}} & \frac{\eta}{2\mu}\lrnorm{\bar{\g}_t}^2 + \frac{1}{\eta}\lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_t^\ast, \x_{t+1}) } \\ \nonumber
+\le & \frac{\eta G^2}{2\mu} + \frac{1}{\eta}\lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_t^\ast, \x_{t+1}) }.
+\end{align} $\textcircled{1}$ holds due to Lemma \ref{lemma_mirror_descent_update_rule} by setting $\g = \bar{\g}_t$, $\u_t = \x_t$, $\u_{t+1} = \x_{t+1}$, $\u^\ast = \y_t^\ast$, and $\lambda = \eta$. $\textcircled{2}$ holds due to $\Phi$ is $\mu$-strongly convex.  $\textcircled{3}$  holds because $\lrangle{\u,\v} \le \frac{a}{2} \lrnorm{\u}^2 + \frac{1}{2a}\lrnorm{\v}^2$ holds for any $\u$, $\v$, and $a>0$.
+
+Telescoping it over $t$, we have
+\begin{align}
+\nonumber
+& \sum_{t=1}^T \lrincir{f_t(\x_t) -f_t(\y_t^\ast) } \\ \nonumber
+\le & \frac{ T \eta G^2}{2\mu} + \frac{1}{\eta} \sum_{t=1}^T \lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_t^\ast, \x_{t+1}) } \\ \nonumber
+= & \frac{ T \eta G^2}{2\mu} + \frac{1}{\eta} \lrincir{\sum_{t=2}^T \lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_{t-1}^\ast, \x_t) } } \\ \nonumber
+& + \frac{1}{\eta} \lrincir{ B_{\Phi}(\y_1^\ast, \x_1) - B_{\Phi}(\y_T^\ast, \x_{T+1}) }\\ \nonumber
+\le & \frac{ T \eta G^2}{2\mu} + \frac{1}{\eta} \lrincir{\sum_{t=2}^T \lrincir{ B_{\Phi}(\y_t^\ast, \x_t) -  B_{\Phi}(\y_{t-1}^\ast, \x_t) } } \\ \nonumber
+& + \frac{1}{\eta} B_{\Phi}(\y_1^\ast, \x_1) \\ \nonumber
+\refabovecir{\le}{\textcircled{1}} & \frac{ T \eta G^2}{2\mu} + \frac{2G}{\eta}\sum_{t=1}^{T-1}\lrnorm{\y_{t+1}^\ast - \y_t^\ast}    + \frac{1}{\eta} B_{\Phi}(\y_1^\ast, \x_1) \\ \nonumber
+\le & \frac{ T \eta G^2}{2\mu} + \frac{2GD}{\eta}  + \frac{R^2}{\eta} \\ \nonumber
+\refabovecir{\lesssim}{\textcircled{2}}  & \sqrt{TD}  + \sqrt{T}.
+\end{align} $\textcircled{1}$ holds due to 
+\begin{align}
+\nonumber
+B_\Phi(\y_{t+1}^\ast, \x_{t+1}) - B_{\Phi}(\y_t^\ast, \x_{t+1}) \le  2G \lrnorm{\y_{t+1}^\ast - \y_t^\ast}
+\end{align} according to Lemma \ref{lemma_dynamic_regret_bound}. $\textcircled{2}$ holds by setting $ \eta = \sqrt{\frac{T}{D+G}}$.
+
+Since it holds for any seqence of $f_t \in \Fcal$, we finally obtain
+\begin{align}
+\nonumber
+\sup_{\{f_t\}_{t=1}^T \in \Fcal^T}\Rcal_T^{\textsc{MD-OCO}} \lesssim  \sqrt{TD}  + \sqrt{T}.
+\end{align} 
+It completes the proof.
+
+It finally completes the proof.
+\end{proof}
+
+
+\textbf{Proof to Theorem \ref{theorem_lower_bound_oco}:}
+
+\begin{proof}
+
+Construct the function $f_t(\x_t) = \lrangle{\v_t, \x_t}$ for any $t\in[T]$. Here, $\v_t\in \{1, -1\}^d$, and every element $\v_t(j)$ with $j\in[d]$ is a random variable, which is sampled from a Rademacher distribution independently. For any online method $A\in\Acal$, its regret is bounded as follows.
+\begin{align}
+\nonumber
+&\sup_{\{f_t\}_{t=1}^T} \Rcal_D^A \ge \Rcal_D^A  \\ \nonumber
+= & \EE_{\v_{1:T}} \sum_{t=1}^T f_t(\x_t) + \sum_{t=1}^T \lrnorm{\x_t - \x_{t-1}}^{\sigma} \\ \nonumber
+& - \EE_{\v_{1:T}} \min_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \lrincir{\sum_{t=1}^T f_t(\y_t) + \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma}} \\ \nonumber
+= & \EE_{\v_{1:T}}\lrincir{ \sum_{t=1}^T f_t(\x_t) +  \sum_{t=1}^T \lrnorm{\x_t - \x_{t-1}}^{\sigma}} \\ \nonumber
+& + \EE_{\v_{1:T}}  \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \lrincir{ -\sum_{t=1}^T f_t(\y_t) -\sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma}  }    \\ \nonumber
+= & \EE_{\v_{1:T}}\max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T \lrincir{ f_t(\x_t) -  f_t(\y_t) - \lrnorm{\y_t - \y_{t-1}}^{\sigma} } \\ \nonumber
+& +  \EE_{\v_{1:T}}  \sum_{t=1}^T \lrnorm{\x_t - \x_{t-1}}^{\sigma}  \\ \nonumber
+= & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T \lrincir{ \lrangle{\v_t, \x_t - \y_t} - \lrnorm{\y_t - \y_{t-1}}^{\sigma} } \\ \label{equa_lower_bound_temp1}
+& +  \EE_{\v_{1:T}}  \sum_{t=1}^T \lrnorm{\x_t - \x_{t-1}}^{\sigma}.
+\end{align}
+
+For any optimal sequence of $\{\y_t^\ast\}_{t=1}^T$,
+\begin{align}
+\nonumber
+\EE_{\v_t} \lrangle{\v_t, \x_{t-1}-\y_{t-1}^\ast} = & \lrangle{\EE_{\v_t}\v_t, \x_{t-1}-\y_{t-1}^\ast} \\ \nonumber
+= &\lrangle{\0, \x_{t-1}-\y_{t-1}^\ast} \\ \nonumber
+= & 0.
+\end{align} Thus, for any optimal sequence of $\{\y_t^\ast\}_{t=1}^T$, we have
+\begin{align}
+\nonumber
+& \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T \lrincir{ \lrangle{\v_t, \x_t - \y_t} -\lrnorm{\y_t - \y_{t-1}}^{\sigma} } \\ \nonumber
+= & \EE_{\v_{1:T}} \lrincir{ \sum_{t=1}^T \lrangle{\v_t, \x_t - \y_t^\ast} -\sum_{t=1}^T \lrnorm{\y_t^\ast - \y_{t-1}^\ast}^{\sigma} } \\ \nonumber
+= & \EE_{\v_{1:T}} \sum_{t=1}^T \lrangle{\v_t, \x_t-\x_{t-1}+\y_{t-1}^\ast - \y_t^\ast} \\ \nonumber
+& - \EE_{\v_{1:T}} \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}^\ast}^{\sigma} \\ \nonumber
+= & \EE_{\v_{1:T}} \sum_{t=1}^T \lrangle{\v_t, \x_t-\x_{t-1}} \\ \nonumber
+& + \EE_{\v_{1:T}} \lrincir{ \sum_{t=1}^T \lrangle{\v_t, \y_{t-1}^\ast - \y_t^\ast}  - \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}^\ast}^{\sigma}   } \\ \nonumber
+= & \EE_{\v_{1:T}} \sum_{t=1}^T \lrangle{\v_t, \x_t-\x_{t-1}} \\ \nonumber
++ & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T} \lrincir{ \sum_{t=1}^T \lrangle{\v_t, \y_{t-1} - \y_t}  - \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma}   } \\ \nonumber
+\end{align}
+
+
+Substituting it into \eqref{equa_lower_bound_temp1}, we have
+\begin{align}
+\nonumber
+&\sup_{\{f_t\}_{t=1}^T} \Rcal_D^A  \\ \nonumber
+\ge & \EE_{\v_{1:T}} \lrincir{ \sum_{t=1}^T \lrangle{\v_t, \x_t-\x_{t-1}}  + \sum_{t=1}^T \lrnorm{\x_t - \x_{t-1}}^{\sigma} } \\ \nonumber
++ & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \lrincir{ \sum_{t=1}^T \lrangle{\v_t, \y_{t-1} - \y_t} - \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma}  } \\ \nonumber
+\refabovecir{\ge}{\textcircled{1}} & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \lrincir{ \sum_{t=1}^T \lrangle{\v_t, \y_{t-1} - \y_t} - \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma}  } \\ \nonumber
+\ge & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T  \lrangle{\v_t, \y_{t-1} - \y_t} \\ \nonumber
+& - \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T} \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma}   \\ \nonumber
+\refabovecir{\ge}{\textcircled{2}}  &  \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T  \lrangle{\v_t, \y_{t-1} - \y_t} -D^{\sigma} \\ \nonumber
+\refabovecir{=}{\textcircled{3}} &  \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T  \lrangle{\v_t, - \y_t} -D^{\sigma} \\ \nonumber
+\refabovecir{=}{\textcircled{4}} &  \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T  \lrangle{\v_t, \y_t} -D^{\sigma}. 
+\end{align} $\textcircled{1}$ holds due to
+\begin{align}
+\nonumber
+& \EE_{\v_{t}} \lrincir{ \lrangle{\v_t, \x_t-\x_{t-1}}  + \lrnorm{\x_t - \x_{t-1}}^{\sigma} } \\ \nonumber
+= & \lrangle{\EE_{\v_{t}}\v_t, \x_t-\x_{t-1}}  + \lrnorm{\x_t - \x_{t-1}}^{\sigma} \\ \nonumber
+=  & \lrnorm{\x_t - \x_{t-1}}^{\sigma}  \ge 0.
+\end{align} $\textcircled{2}$ holds because that, for any sequence $\{\y_t\}_{t=1}^T$, $\sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}} \le D$. Thus,
+\begin{align}
+\nonumber
+& \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T} \sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}^{\sigma} \\ \nonumber 
+\le & \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T} \lrincir{\sum_{t=1}^T \lrnorm{\y_t - \y_{t-1}}}^{\sigma} \\ \nonumber
+\le & D^{\sigma}. 
+\end{align} $\textcircled{3}$ holds because that, for any vector $\y_{t-1}$, 
+\begin{align}
+\nonumber
+\EE_{\v_t} \lrangle{\v_t, \y_{t-1}} =  \lrangle{\EE_{\v_t}\v_t, \y_{t-1}} = \lrangle{\0, \y_{t-1}} = 0.
+\end{align} $\textcircled{4}$ holds because that the domain of $\v_t$ is symmetric.
+
+
+Furthermore, we construct  a sequence $\{\y_t\}_{t=1}^T$ as follows.
+
+\begin{enumerate}
+    \item Evenly split $\{\y_t\}_{t=1}^{T}$ into two subsets: $\{\y_t\}_{t=1}^{T_1}$ and $\{\y_{T_1+t}\}_{t=1}^{T_2}$. Here, $T_1 = T_2 = \frac{T}{2}$.
+    \item After that, evenly split $\{\y_t\}_{t=1}^{T_1}$ into $N := \min\left\{ \frac{D}{R},T_1 \right\} $ subsets, that is, $\{\y_t\}_{t=1}^{\frac{T_1}{N}}$, $\{\y_t\}_{t=\frac{T_1}{N} + 1}^{\frac{2T_1}{N}}$, $\{\y_t\}_{t=\frac{2T_1}{N} + 1}^{\frac{3T_1}{N}}$, ..., $\{\y_t\}_{t=\frac{(N-1)T_1}{N}+1}^{T_1}$. 
+    \item For the $i$-th subset of the sequence $\{\y_t\}_{t=1}^{T_1}$, let the values in it be same, and denote it by $\u_i$ with $\lrnorm{\u_i} \le \frac{R}{2}$. For the whole sequence  $\{\y_{T_1+t}\}_{t=1}^{T_2}$, let all the values be same, namely $\u_N$.
+    \item For the sequence of $\{\y_t\}_{t=1}^{T_1}$, elements in different subsets are different such that $\|\u_{i+1} - \u_i\| \leq \|\u_{i+1}\| + \|\u_i\| \leq R$. Thus, 
+    \begin{align}
+    \nonumber
+    & \sum_{t=1}^{T-1} \|\y_{t+1} - \y_{t}\| \\ \nonumber
+    = & \sum_{t=1}^{T_1-1} \|\y_{t+1} - \y_{t}\| + \sum_{t=T_1}^{T} \|\y_{t+1} - \y_{t}\| \\ \nonumber
+    = & \sum_{i=1}^{N-1} \|\u_{i+1} - \u_i\| + 0\\ \nonumber
+    \le & (N-1)R \\ \nonumber
+    \le & D.
+    \end{align} The last inequality holds due to $(N-1)R \le D$.
+     It implies that $\{\y_t\}_{t=1}^{T}$ under our construction is feasible.
+\end{enumerate}
+
+ Then, we have
+\begin{align}
+\nonumber
+& \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \sum_{t=1}^T  \lrangle{\v_t,  \y_t}   \\ \nonumber
+= & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Lcal_D^T}  \lrincir{ \sum_{t=1}^{T_1}  \lrangle{\v_t,  \y_t} + \sum_{t=T_1+1}^T  \lrangle{\v_t,  \y_t} } \\ \nonumber
+= & \EE_{\v_{1:T}}  \sum_{i=1}^N  \max_{\lrnorm{\u_i}\le \frac{R}{2}} \lrangle{\sum_{t=1 + \frac{T(i-1)}{N}}^{\frac{Ti}{N}}\v_t, \u_i} \\ \nonumber
+& + \EE_{\v_{1:T}} \max_{\lrnorm{\u_N}\le \frac{R}{2}} \lrangle{\sum_{t=T_1+1}^{T}\v_t, \u_N} \\ \nonumber
+\refabovecir{=}{\textcircled{1}} & \frac{R}{2}\EE_{\v_{1:T}} \sum_{i=1}^N   \lrnorm{ \sum_{t=1 + \frac{T(i-1)}{N}}^{\frac{Ti}{N}}\v_t}  + \frac{R}{2} \EE_{\v_{1:T}}\lrnorm{ \sum_{t=T_1+1}^{T}\v_t }  \\ \nonumber
+\refabovecir{\ge}{\textcircled{2}} & \frac{R}{2\sqrt{d}}\EE_{\v_{1:T}} \sum_{i=1}^N  \sum_{j=1}^d \left | \sum_{t=1 + \frac{T(i-1)}{N}}^{\frac{Ti}{N}}\v_t(j) \right | \\ \nonumber
+& + \frac{R}{2\sqrt{d}} \EE_{\v_{1:T}}\sum_{j=1}^d \left | \sum_{t=T_1+1}^{T}\v_t(j) \right | \\ \nonumber
+\refabovecir{=}{\textcircled{3}} & \frac{\sqrt{d}NR}{2} \cdot  \Omegacal{\sqrt{\frac{T}{N}}}  + \frac{R\sqrt{d}}{2} \cdot \Omega\lrincir{\sqrt{\frac{T}{2}}} \\ \nonumber
+= & \Omegacal{\sqrt{R}\sqrt{TNR} + \sqrt{T}} \\ \nonumber
+\refabovecir{=}{\textcircled{4}} & \Omegacal{\sqrt{TD}+ \sqrt{T}}.
+\end{align} $\textcircled{1}$ holds because that the maximum is obtained at the boundary of the domain. $\textcircled{2}$ holds because that, for any $\v\in\RR^d$, $\lrnorm{\v}_1 \le \sqrt{d} \lrnorm{\v}_2$. $\textcircled{3}$ holds due to a classic result \cite{Hazan2016Introduction}, that is,
+\begin{align}
+\nonumber
+\EE_{\v_{1:T}} \left | \sum_{t=1 + \frac{T(i-1)}{N}}^{\frac{Ti}{N}}\v_t(j) \right | = \Omegacal{\sqrt{\frac{T}{N}}}.
+\end{align} $\textcircled{4}$ holds due to $D - R \le NR \le D + R$, which implies that $NR \lesssim D$ holds for $D>0$.
+
+Therefore, we obtain
+\begin{align}
+\nonumber
+\sup_{\{f_t\}_{t=1}^T} \Rcal_D^A \ge & \EE_{\v_{1:T}} \max_{\{\y_t\}_{t=1}^T\in \Xcal^T}  \sum_{t=1}^T  \lrangle{\v_t, \y_t} - D^{\sigma} \\ \nonumber
+= & \Omegacal{\sqrt{TD} + \sqrt{T}}.
+\end{align} The last equality holds because $D^{\sigma}$ is a constant, and it does not increase over $T$.
+
+
+
+Since it holds for any online algorithm $A\in \Acal$, we finally have 
+\begin{align}
+\nonumber
+\inf_{A\in\Acal} \sup_{\{f_{t}\}_{t=1}^T \in \Fcal^T}  = \Omegacal{\sqrt{TD} + \sqrt{T}}.
+\end{align} It completes the proof.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+% use section* for acknowledgment
+\ifCLASSOPTIONcompsoc
+  % The Computer Society usually uses the plural form
+  \section*{Acknowledgments}
+\else
+  % regular IEEE prefers the singular form
+  \section*{Acknowledgment}
+\fi
+
+
+This work was supported by the National Key R \& D Program of China 2018YFB1003203 and the National Natural Science Foundation of China (Grant No. 61672528, 61773392, and 61671463). 
+
+% Can use something like this to put references on a page
+% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://mirror.ctan.org/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+
+\bibliography{reference}
+
+
+
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{Yawei.pdf}}]{Yawei Zhao} is currently a Ph.D. candidate in Computer Science from the National University of Defense Technology, China. He received his B.E. degree and M.S. degree in Computer Science from the National University of Defense Technology, China, in 2013 and 2015, respectively. His research interests include asynchronous and parallel optimization algorithms, pattern recognition and machine learning.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{zxx.pdf}}]{Xingxing Zhang} is currently pursuing the Ph.D. degree in the Institute of Information Science, Beijing Jiaotong University, Beijing, China. Her research interests include machine learning, data analysis, and image/video understanding.
+\end{IEEEbiography}
+ 
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{EnZhu.pdf}}]{En Zhu} received his M.S. degree and Ph.D. degree in Computer Science from the National University of Defense Technology, China, in 2001 and 2005, respectively. He is now working as a full professor in the School of Computer Science, National University of Defense Technology, China. His main research interests include pattern recognition, image processing, and information security.
+\end{IEEEbiography}
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{Xinwang.pdf}}]{Xinwang Liu} received his PhD degree from National University of Defense Technology (NUDT), China. He is now Assistant Researcher of School of Computer Science, NUDT. His current research interests include kernel learning and unsupervised feature learning. Dr. Liu has published 40+ peer-reviewed papers, including those in highly regarded journals and conferences such as IEEE T-IP, IEEE T-NNLS, ICCV, AAAI, IJCAI, etc. He served on the Technical Program Committees of IJCAI 2016-2017, AAAI 2018-2018.
+\end{IEEEbiography}
+
+
+
+
+\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{JianpingYin.pdf}}]{Jianping Yin} received his M.S. degree and Ph.D. degree in Computer Science from the National University of Defense Technology, China, in 1986 and 1990, respectively. He is a professor of computer science in the Dongguan University of Technology. His research interests involve artificial intelligence, pattern recognition, algorithm design, and information security.
+\end{IEEEbiography}
+
+
+
+% that's all folks
+\end{document}
+
+

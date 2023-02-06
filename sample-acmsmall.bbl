@@ -1,0 +1,384 @@
+%%% -*-BibTeX-*-
+%%% Do NOT edit. File created by BibTeX with style
+%%% ACM-Reference-Format-Journals [18-Jan-2012].
+
+\begin{thebibliography}{26}
+
+%%% ====================================================================
+%%% NOTE TO THE USER: you can override these defaults by providing
+%%% customized versions of any of these macros before the \bibliography
+%%% command.  Each of them MUST provide its own final punctuation,
+%%% except for \shownote{}, \showDOI{}, and \showURL{}.  The latter two
+%%% do not use final punctuation, in order to avoid confusing it with
+%%% the Web address.
+%%%
+%%% To suppress output of a particular field, define its macro to expand
+%%% to an empty string, or better, \unskip, like this:
+%%%
+%%% \newcommand{\showDOI}[1]{\unskip}   % LaTeX syntax
+%%%
+%%% \def \showDOI #1{\unskip}           % plain TeX syntax
+%%%
+%%% ====================================================================
+
+\ifx \showCODEN    \undefined \def \showCODEN     #1{\unskip}     \fi
+\ifx \showDOI      \undefined \def \showDOI       #1{#1}\fi
+\ifx \showISBNx    \undefined \def \showISBNx     #1{\unskip}     \fi
+\ifx \showISBNxiii \undefined \def \showISBNxiii  #1{\unskip}     \fi
+\ifx \showISSN     \undefined \def \showISSN      #1{\unskip}     \fi
+\ifx \showLCCN     \undefined \def \showLCCN      #1{\unskip}     \fi
+\ifx \shownote     \undefined \def \shownote      #1{#1}          \fi
+\ifx \showarticletitle \undefined \def \showarticletitle #1{#1}   \fi
+\ifx \showURL      \undefined \def \showURL       {\relax}        \fi
+% The following commands are used for tagged output and should be
+% invisible to TeX
+\providecommand\bibfield[2]{#2}
+\providecommand\bibinfo[2]{#2}
+\providecommand\natexlab[1]{#1}
+\providecommand\showeprint[2][]{arXiv:#2}
+
+\bibitem[\protect\citeauthoryear{Aji and Heafield}{Aji and Heafield}{2017}]%
+        {alhamaji2017}
+\bibfield{author}{\bibinfo{person}{Alham Aji} {and} \bibinfo{person}{Kenneth
+  Heafield}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Sparse Communication for Distributed Gradient
+  Descent}. In \bibinfo{booktitle}{\emph{Proceedings of the Conference on
+  Empirical Methods in Natural Language Processing (EMNLP'17)}}.
+  \bibinfo{pages}{440--445}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Alistarh, Grubic, Li, Tomioka, and
+  Vojnovic}{Alistarh et~al\mbox{.}}{2017}]%
+        {NIPS2017_6768}
+\bibfield{author}{\bibinfo{person}{Dan Alistarh}, \bibinfo{person}{Demjan
+  Grubic}, \bibinfo{person}{Jerry Li}, \bibinfo{person}{Ryota Tomioka}, {and}
+  \bibinfo{person}{Milan Vojnovic}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{QSGD: Communication-Efficient SGD via Gradient
+  Quantization and Encoding}.
+\newblock In \bibinfo{booktitle}{\emph{Proceedings of the Advances in Neural
+  Information Processing Systems (NIPS'17)}},
+  \bibfield{editor}{\bibinfo{person}{I.~Guyon}, \bibinfo{person}{U.~V.
+  Luxburg}, \bibinfo{person}{S.~Bengio}, \bibinfo{person}{H.~Wallach},
+  \bibinfo{person}{R.~Fergus}, \bibinfo{person}{S.~Vishwanathan}, {and}
+  \bibinfo{person}{R.~Garnett}} (Eds.). \bibinfo{pages}{1709--1720}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Asia}{Asia}{2018}]%
+        {dmtk}
+\bibfield{author}{\bibinfo{person}{Microsoft Research~Lab Asia}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \bibinfo{title}{Distributed Machine Learning Toolkit}.
+\newblock \bibinfo{howpublished}{\url{http://www.dmtk.io}}.
+\newblock
+\newblock
+\shownote{Accessed Septemper 10, 2018.}
+
+
+\bibitem[\protect\citeauthoryear{Bach, Jenatton, Mairal, and Obozinski}{Bach
+  et~al\mbox{.}}{2012}]%
+        {Bach2012Optimization}
+\bibfield{author}{\bibinfo{person}{Francis Bach}, \bibinfo{person}{Rodolphe
+  Jenatton}, \bibinfo{person}{Julien Mairal}, {and} \bibinfo{person}{Guillaume
+  Obozinski}.} \bibinfo{year}{2012}\natexlab{}.
+\newblock \showarticletitle{Optimization with Sparsity-Inducing Penalties}.
+\newblock \bibinfo{journal}{\emph{Foundations \& Trends in Machine Learning}}
+  \bibinfo{volume}{4}, \bibinfo{number}{1} (\bibinfo{year}{2012}),
+  \bibinfo{pages}{1--106}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Duchi, John, ShalevShwartz, Shai, Singer,
+  Yoram, Chandra, and Tushar}{Duchi et~al\mbox{.}}{2008}]%
+        {Duchi2008Efficient}
+\bibfield{author}{\bibinfo{person}{Duchi}, \bibinfo{person}{John},
+  \bibinfo{person}{ShalevShwartz}, \bibinfo{person}{Shai},
+  \bibinfo{person}{Singer}, \bibinfo{person}{Yoram}, \bibinfo{person}{Chandra},
+  {and} \bibinfo{person}{Tushar}.} \bibinfo{year}{2008}\natexlab{}.
+\newblock \showarticletitle{Efficient projections onto the l 1 -ball for
+  learning in high dimensions}. In \bibinfo{booktitle}{\emph{Proceedings of the
+  International Conference on Machine Learning (ICML'08)}}.
+  \bibinfo{pages}{272--279}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Duchi, Shalev-shwartz, Singer, and
+  Tewari}{Duchi et~al\mbox{.}}{2010}]%
+        {Duchi:2010tk}
+\bibfield{author}{\bibinfo{person}{John~C. Duchi}, \bibinfo{person}{Shai
+  Shalev-shwartz}, \bibinfo{person}{Yoram Singer}, {and} \bibinfo{person}{Ambuj
+  Tewari}.} \bibinfo{year}{2010}\natexlab{}.
+\newblock \showarticletitle{Composite objective mirror descent}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the Annual Conference on Learning
+  Theory (COLT)}}. \bibinfo{pages}{14--26}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Harlap, Cui, Dai, Wei, Ganger, Gibbons,
+  Gibson, and Xing}{Harlap et~al\mbox{.}}{2016}]%
+        {Harlap2016Addressing}
+\bibfield{author}{\bibinfo{person}{Aaron Harlap}, \bibinfo{person}{Henggang
+  Cui}, \bibinfo{person}{Wei Dai}, \bibinfo{person}{Jinliang Wei},
+  \bibinfo{person}{Gregory~R. Ganger}, \bibinfo{person}{Phillip~B. Gibbons},
+  \bibinfo{person}{Garth~A. Gibson}, {and} \bibinfo{person}{Eric~P. Xing}.}
+  \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{Addressing the straggler problem for iterative
+  convergent parallel ML}. In \bibinfo{booktitle}{\emph{Proceedings of the ACM
+  Symposium on Cloud Computing (SOCC'16)}}. \bibinfo{pages}{98--111}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jaggi, Smith, Tak\'{a}\v{c}, Terhorst,
+  Krishnan, Hofmann, and Jordan}{Jaggi et~al\mbox{.}}{2014}]%
+        {Jaggi:2014}
+\bibfield{author}{\bibinfo{person}{Martin Jaggi}, \bibinfo{person}{Virginia
+  Smith}, \bibinfo{person}{Martin Tak\'{a}\v{c}}, \bibinfo{person}{Jonathan
+  Terhorst}, \bibinfo{person}{Sanjay Krishnan}, \bibinfo{person}{Thomas
+  Hofmann}, {and} \bibinfo{person}{Michael~I. Jordan}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Communication-efficient Distributed Dual Coordinate
+  Ascent}. In \bibinfo{booktitle}{\emph{Proceedings of the 27th International
+  Conference on Neural Information Processing Systems (NIPS'14)}}.
+  \bibinfo{pages}{3068--3076}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Andersen, Park, Smola, Ahmed, Josifovski,
+  Long, Shekita, and Su}{Li et~al\mbox{.}}{2014a}]%
+        {Li:2014tt}
+\bibfield{author}{\bibinfo{person}{Mu Li}, \bibinfo{person}{David~G Andersen},
+  \bibinfo{person}{Jun~Woo Park}, \bibinfo{person}{Alexander~J Smola},
+  \bibinfo{person}{Amr Ahmed}, \bibinfo{person}{Vanja Josifovski},
+  \bibinfo{person}{James Long}, \bibinfo{person}{Eugene~J Shekita}, {and}
+  \bibinfo{person}{Bor-Yiing Su}.} \bibinfo{year}{2014}\natexlab{a}.
+\newblock \showarticletitle{{Scaling Distributed Machine Learning with the
+  Parameter Server.}}
+\newblock \bibinfo{journal}{\emph{Proceedings of the USENIX Symposium on
+  Operating Systems Design and Implementation (OSDI'14)}}
+  (\bibinfo{year}{2014}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Li, Andersen, Smola, and Yu}{Li
+  et~al\mbox{.}}{2014b}]%
+        {Li:2014:CED}
+\bibfield{author}{\bibinfo{person}{Mu Li}, \bibinfo{person}{David~G. Andersen},
+  \bibinfo{person}{Alexander Smola}, {and} \bibinfo{person}{Kai Yu}.}
+  \bibinfo{year}{2014}\natexlab{b}.
+\newblock \showarticletitle{Communication Efficient Distributed Machine
+  Learning with the Parameter Server}. In \bibinfo{booktitle}{\emph{Proceedings
+  of the 27th International Conference on Neural Information Processing Systems
+  (NIPS'14)}}. \bibinfo{pages}{19--27}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Reddi, Konecn{\'{y}}, Richt{\'a}rik,
+  P{\'o}czos, and Smola}{Reddi et~al\mbox{.}}{2016}]%
+        {Reddi:2016wm}
+\bibfield{author}{\bibinfo{person}{Sashank~J Reddi}, \bibinfo{person}{Jakub
+  Konecn{\'{y}}}, \bibinfo{person}{Peter Richt{\'a}rik},
+  \bibinfo{person}{Barnab{\'a}s P{\'o}czos}, {and} \bibinfo{person}{Alexander~J
+  Smola}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{{AIDE - Fast and Communication Efficient
+  Distributed Optimization.}}
+\newblock \bibinfo{journal}{\emph{CoRR}}  \bibinfo{volume}{math.OC}
+  (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Renggli, Alistarh, and Hoefler}{Renggli
+  et~al\mbox{.}}{2018}]%
+        {Renggli:2018uf}
+\bibfield{author}{\bibinfo{person}{C{\`e}dric Renggli}, \bibinfo{person}{Dan
+  Alistarh}, {and} \bibinfo{person}{Torsten Hoefler}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{{SparCML: High-Performance Sparse Communication for
+  Machine Learning}}.
+\newblock \bibinfo{journal}{\emph{arXiv.org}} (\bibinfo{year}{2018}).
+\newblock
+\showeprint[arxiv]{cs.DC/1802.08021v1}
+
+
+\bibitem[\protect\citeauthoryear{Shalev-Shwartz and Ben-David}{Shalev-Shwartz
+  and Ben-David}{2014}]%
+        {Shalev2014Understanding}
+\bibfield{author}{\bibinfo{person}{Shai Shalev-Shwartz} {and}
+  \bibinfo{person}{Shai Ben-David}.} \bibinfo{year}{2014}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Understanding Machine Learning: From Theory
+  to Algorithms}}.
+\newblock \bibinfo{publisher}{Cambridge University Press}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Shamir, Srebro, and Zhang}{Shamir
+  et~al\mbox{.}}{2014}]%
+        {Shamir:2014:CDO}
+\bibfield{author}{\bibinfo{person}{Ohad Shamir}, \bibinfo{person}{Nathan
+  Srebro}, {and} \bibinfo{person}{Tong Zhang}.}
+  \bibinfo{year}{2014}\natexlab{}.
+\newblock \showarticletitle{Communication-efficient Distributed Optimization
+  Using an Approximate Newton-type Method}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the 31st International Conference on
+  International Conference on Machine Learning (ICML'14)}}.
+  \bibinfo{pages}{1000--1008}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Smith, Forte, Ma, Tak{\'a}{\v c}, Jordan, and
+  Jaggi}{Smith et~al\mbox{.}}{2016}]%
+        {Smith:2016wp}
+\bibfield{author}{\bibinfo{person}{Virginia Smith}, \bibinfo{person}{Simone
+  Forte}, \bibinfo{person}{Chenxin Ma}, \bibinfo{person}{Martin Tak{\'a}{\v
+  c}}, \bibinfo{person}{Michael~I Jordan}, {and} \bibinfo{person}{Martin
+  Jaggi}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{{CoCoA: A General Framework for
+  Communication-Efficient Distributed Optimization}}.
+\newblock \bibinfo{journal}{\emph{arXiv.org}} (\bibinfo{date}{Nov.}
+  \bibinfo{year}{2016}).
+\newblock
+\showeprint[arxiv]{cs.LG/1611.02189v1}
+
+
+\bibitem[\protect\citeauthoryear{Song, Cui, Jiang, and Xia}{Song
+  et~al\mbox{.}}{2017}]%
+        {Song:2017tu}
+\bibfield{author}{\bibinfo{person}{Chaobing Song}, \bibinfo{person}{Shaobo
+  Cui}, \bibinfo{person}{Yong Jiang}, {and} \bibinfo{person}{Shu-Tao Xia}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Accelerated Stochastic Greedy Coordinate Descent by
+  Soft Thresholding Projection onto Simplex}.
+\newblock In \bibinfo{booktitle}{\emph{Proceedings of Advances in Neural
+  Information Processing Systems (NIPS'17)}}. \bibinfo{pages}{4838--4847}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wang, Wang, and Srebro}{Wang
+  et~al\mbox{.}}{2017}]%
+        {pmlr-v65-wang17a}
+\bibfield{author}{\bibinfo{person}{Jialei Wang}, \bibinfo{person}{Weiran Wang},
+  {and} \bibinfo{person}{Nathan Srebro}.} \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{Memory and Communication Efficient Distributed
+  Stochastic Optimization with Minibatch Prox}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the Conference on Learning Theory
+  (COLT'17)}}, Vol.~\bibinfo{volume}{65}. \bibinfo{pages}{1882--1919}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wangni, Wang, Liu, and Zhang}{Wangni
+  et~al\mbox{.}}{2018}]%
+        {Wangni:2017vj}
+\bibfield{author}{\bibinfo{person}{Jianqiao Wangni}, \bibinfo{person}{Jialei
+  Wang}, \bibinfo{person}{Ji Liu}, {and} \bibinfo{person}{Tong Zhang}.}
+  \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{{Gradient Sparsification for
+  Communication-Efficient Distributed Optimization}}. In
+  \bibinfo{booktitle}{\emph{Proceedings of the Advances in Neural Information
+  Processing Systems (NIPS'18)}}. \bibinfo{pages}{1--9}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Wikipedia}{Wikipedia}{2018a}]%
+        {bloomfilter}
+\bibfield{author}{\bibinfo{person}{Wikipedia}.}
+  \bibinfo{year}{2018}\natexlab{a}.
+\newblock \bibinfo{title}{Bloom filter}.
+\newblock
+  \bibinfo{howpublished}{\url{https://en.wikipedia.org/wiki/Bloom_filter}}.
+\newblock
+\newblock
+\shownote{Accessed Septemper 10, 2018.}
+
+
+\bibitem[\protect\citeauthoryear{Wikipedia}{Wikipedia}{2018b}]%
+        {elias}
+\bibfield{author}{\bibinfo{person}{Wikipedia}.}
+  \bibinfo{year}{2018}\natexlab{b}.
+\newblock \bibinfo{title}{Elias gamma coding}.
+\newblock
+  \bibinfo{howpublished}{\url{https://en.wikipedia.org/wiki/Elias_gamma_coding}}.
+\newblock
+\newblock
+\shownote{Accessed Septemper 10, 2018.}
+
+
+\bibitem[\protect\citeauthoryear{Xie, Kim, Zhou, Ho, Kumar, Yu, and Xing}{Xie
+  et~al\mbox{.}}{2016}]%
+        {Xie:2016vt}
+\bibfield{author}{\bibinfo{person}{Pengtao Xie}, \bibinfo{person}{Jin~Kyu Kim},
+  \bibinfo{person}{Yi Zhou}, \bibinfo{person}{Qirong Ho},
+  \bibinfo{person}{Abhimanu Kumar}, \bibinfo{person}{Yaoliang Yu}, {and}
+  \bibinfo{person}{Eric~P Xing}.} \bibinfo{year}{2016}\natexlab{}.
+\newblock \showarticletitle{{Lighter-Communication Distributed Machine Learning
+  via Sufficient Factor Broadcasting.}}
+\newblock \bibinfo{journal}{\emph{Proceedings of the Conference on Uncertainty
+  in Artificial Intelligence (UAI'16)}} (\bibinfo{year}{2016}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Xing, Ho, Dai, Kim, Wei, Lee, Zheng, Xie,
+  Kumar, and Yu}{Xing et~al\mbox{.}}{2015}]%
+        {Xing:2015dw}
+\bibfield{author}{\bibinfo{person}{Eric~P Xing}, \bibinfo{person}{Qirong Ho},
+  \bibinfo{person}{Wei Dai}, \bibinfo{person}{Jin~Kyu Kim},
+  \bibinfo{person}{Jinliang Wei}, \bibinfo{person}{Seunghak Lee},
+  \bibinfo{person}{Xun Zheng}, \bibinfo{person}{Pengtao Xie},
+  \bibinfo{person}{Abhimanu Kumar}, {and} \bibinfo{person}{Yaoliang Yu}.}
+  \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{{Petuum: A New Platform for Distributed Machine
+  Learning on Big Data}}.
+\newblock \bibinfo{journal}{\emph{IEEE Transactions on Big Data}}
+  \bibinfo{volume}{1}, \bibinfo{number}{2} (\bibinfo{year}{2015}),
+  \bibinfo{pages}{49--67}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Ye and Abbe}{Ye and Abbe}{2018}]%
+        {Ye:2018uc}
+\bibfield{author}{\bibinfo{person}{Min Ye} {and} \bibinfo{person}{Emmanuel
+  Abbe}.} \bibinfo{year}{2018}\natexlab{}.
+\newblock \showarticletitle{{Communication-Computation Efficient Gradient
+  Coding}}. In \bibinfo{booktitle}{\emph{Proceedings of the International
+  Conference on Machine Learning (ICML'18)}}. \bibinfo{pages}{1--9}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Li, Kara, Alistarh, Liu, and
+  Zhang}{Zhang et~al\mbox{.}}{2017}]%
+        {Zhang:2016wx}
+\bibfield{author}{\bibinfo{person}{Hantian Zhang}, \bibinfo{person}{Jerry Li},
+  \bibinfo{person}{Kaan Kara}, \bibinfo{person}{Dan Alistarh},
+  \bibinfo{person}{Ji Liu}, {and} \bibinfo{person}{Ce Zhang}.}
+  \bibinfo{year}{2017}\natexlab{}.
+\newblock \showarticletitle{{The ZipML Framework for Training Models with
+  End-to-End Low Precision: The Cans, the Cannots, and a Little Bit of Deep
+  Learning}}. In \bibinfo{booktitle}{\emph{Proceedings of the International
+  Conference on Machine Learning (ICML'17)}}. \bibinfo{pages}{1--9}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang, Duchi, and Wainwright}{Zhang
+  et~al\mbox{.}}{2013}]%
+        {Zhang:2013wq}
+\bibfield{author}{\bibinfo{person}{Yuchen Zhang}, \bibinfo{person}{John~C
+  Duchi}, {and} \bibinfo{person}{Martin~J Wainwright}.}
+  \bibinfo{year}{2013}\natexlab{}.
+\newblock \showarticletitle{{Communication-efficient algorithms for statistical
+  optimization.}}
+\newblock \bibinfo{journal}{\emph{Journal of Machine Learning Research}}
+  (\bibinfo{year}{2013}), \bibinfo{pages}{3321--3363}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Zhang and Lin}{Zhang and Lin}{2015}]%
+        {pmlr-v37-zhangb15}
+\bibfield{author}{\bibinfo{person}{Yuchen Zhang} {and} \bibinfo{person}{Xiao
+  Lin}.} \bibinfo{year}{2015}\natexlab{}.
+\newblock \showarticletitle{DiSCO: Distributed Optimization for Self-Concordant
+  Empirical Loss}. In \bibinfo{booktitle}{\emph{Proceedings of the 32nd
+  International Conference on Machine Learning (ICML'15)}}.
+  \bibinfo{pages}{362--370}.
+\newblock
+
+
+\end{thebibliography}
